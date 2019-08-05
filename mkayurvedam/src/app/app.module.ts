@@ -22,6 +22,12 @@ import { ProblemsComponent } from './problems/problems.component';
 import { VisitsComponent } from './visits/visits.component';
 import { LabResultsComponent } from './lab-results/lab-results.component';
 import { RxComponent } from './rx/rx.component';
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { LoginComponent } from './login/login.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +38,8 @@ import { RxComponent } from './rx/rx.component';
     ProblemsComponent,
     VisitsComponent,
     LabResultsComponent,
-    RxComponent
+    RxComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -47,9 +54,36 @@ import { RxComponent } from './rx/rx.component';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    NgxAuthFirebaseUIModule.forRoot({
+      apiKey: "AIzaSyBpet62ZKXbFmRquSONCvJ_PNJP1FTItGE",
+      authDomain: "mkayurvedam.firebaseapp.com",
+      databaseURL: "https://mkayurvedam.firebaseio.com",
+      projectId: "mkayurvedam",
+      storageBucket: "mkayurvedam.appspot.com",
+      messagingSenderId: "730498769972",
+      appId: "1:730498769972:web:6e926fc583ce6c17"
+  }),
+  AngularFireModule.initializeApp(
+    {
+      apiKey: "AIzaSyBpet62ZKXbFmRquSONCvJ_PNJP1FTItGE",
+      authDomain: "mkayurvedam.firebaseapp.com",
+      databaseURL: "https://mkayurvedam.firebaseio.com",
+      projectId: "mkayurvedam",
+      storageBucket: "mkayurvedam.appspot.com",
+      messagingSenderId: "730498769972",
+      appId: "1:730498769972:web:6e926fc583ce6c17"
+  },'angularfs'),
+  AngularFirestoreModule,
+  FlexLayoutModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+
+
+
+}

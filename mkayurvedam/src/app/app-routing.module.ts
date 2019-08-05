@@ -6,14 +6,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppNavComponent } from './app-nav/app-nav.component';
 import { VisitsComponent } from './visits/visits.component';
+import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
 
   {
-    path:'',
-    component: PatientsComponent
+    path:'login',
+    component:LoginComponent
   },
+
   {
     path:'patients',
     component:PatientsComponent

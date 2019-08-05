@@ -16,6 +16,8 @@
     "@angular/common": "~8.2.0",
     "@angular/compiler": "~8.2.0",
     "@angular/core": "~8.2.0",
+    "@angular/fire": "^5.2.1",
+    "@angular/flex-layout": "^8.0.0-beta.26",
     "@angular/forms": "~8.2.0",
     "@angular/material": "^8.1.2",
     "@angular/platform-browser": "~8.2.0",
@@ -23,6 +25,9 @@
     "@angular/pwa": "^0.802.0",
     "@angular/router": "~8.2.0",
     "@angular/service-worker": "~8.2.0",
+    "firebase": "^6.3.4",
+    "flex-layout": "^1.0.1",
+    "ngx-auth-firebaseui": "^3.3.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
@@ -46,6 +51,11 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "@angular-devkit/architect": "<0.900 || ^0.900.0-0 || ^9.0.0-0",
+    "firebase-tools": "^6.10.0",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^6.2.2",
+    "inquirer-autocomplete-prompt": "^1.0.1"
   }
 }

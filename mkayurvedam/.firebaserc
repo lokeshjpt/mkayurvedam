@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "mkayurvedam"
+  },
+  "targets": {
+    "mkayurvedam": {
+      "hosting": {
+        "mkayurvedam": [
+          "mkayurvedam"
+        ]
+      }
+    }
   }
 }

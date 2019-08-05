@@ -1,0 +1,8 @@
+<ngx-auth-firebaseui [registrationEnabled]="false" [providers]="password" appearance="fill"
+(onSuccess)="printUser($event)"
+(onError)="printError($event)"> guestEnabled=true
+</ngx-auth-firebaseui>
+
+<ngx-auth-firebaseui-user hidden (onSuccess)="printUser($event)"
+(onError)="printError($event)">></ngx-auth-firebaseui-user>
+
