@@ -13,8 +13,8 @@ export class AppComponent {
 
   printUser(event) {
     console.log(event);
-    console.log("test");
-    this.router.navigate(['/home']);
+    console.log('test');
+    this.router.navigate(['/visits']);
   }
 
   printError(event) {

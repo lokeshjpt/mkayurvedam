@@ -1,3 +1,4 @@
+import { AuthService } from './../service/auth.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,15 +10,18 @@ import { Component, OnInit } from '@angular/core';
 export class LoginComponent implements OnInit {
 
 
+
+
   ngOnInit() {
   }
 
-  constructor(private router: Router){}
+  constructor(private router: Router
+            ){}
 
   printUser(event) {
-    console.log(event);
-    console.log('test');
-    this.router.navigate(['/']);
+
+
+    this.router.navigate(['']);
 
     sessionStorage.setItem('userLoggedIn', 'true');
   }

@@ -25,6 +25,7 @@
     "@angular/pwa": "^0.802.0",
     "@angular/router": "~8.2.0",
     "@angular/service-worker": "~8.2.0",
+    "angularfire2": "^5.2.1",
     "firebase": "^6.3.4",
     "flex-layout": "^1.0.1",
     "ngx-auth-firebaseui": "^3.3.0",

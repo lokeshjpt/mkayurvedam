@@ -7,34 +7,37 @@ import { Routes, RouterModule } from '@angular/router';
 import { AppNavComponent } from './app-nav/app-nav.component';
 import { VisitsComponent } from './visits/visits.component';
 import { LoginComponent } from './login/login.component';
-
+import { AuthGuard } from './service/auth.guard';
 
 const routes: Routes = [
 
   {
-    path:'login',
-    component:LoginComponent
-  },
-
-  {
-    path:'patients',
-    component:PatientsComponent
-  },
-  {
-    path:'problems',
-    component:ProblemsComponent
-  },
-  {
-    path:'visits',
+    path:'',
     component:VisitsComponent
   },
   {
+    path:'login',
+    component:LoginComponent
+  },
+  {
+    path:'patients',
+    component:PatientsComponent, canActivate: [AuthGuard]
+  },
+  {
+    path:'problems',
+    component:ProblemsComponent, canActivate: [AuthGuard]
+  },
+  {
+    path:'visits',
+    component:VisitsComponent, canActivate: [AuthGuard]
+  },
+  {
     path:'rx',
-    component:RxComponent
+    component:RxComponent, canActivate: [AuthGuard]
   },
   {
     path:'lab-results',
-    component:LabResultsComponent
+    component:LabResultsComponent, canActivate: [AuthGuard]
   }
 ];
 

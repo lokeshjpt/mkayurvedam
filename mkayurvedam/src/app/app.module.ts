@@ -1,3 +1,4 @@
+import { AuthService } from './service/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -27,7 +28,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { LoginComponent } from './login/login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { AuthGuard } from './service/auth.guard';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
+import { NotifyService } from './service/notify.service';
 
 @NgModule({
   declarations: [
@@ -63,22 +68,26 @@ import { FlexLayoutModule } from '@angular/flex-layout';
       storageBucket: "mkayurvedam.appspot.com",
       messagingSenderId: "730498769972",
       appId: "1:730498769972:web:6e926fc583ce6c17"
-  }),
-  AngularFireModule.initializeApp(
-    {
-      apiKey: "AIzaSyBpet62ZKXbFmRquSONCvJ_PNJP1FTItGE",
-      authDomain: "mkayurvedam.firebaseapp.com",
-      databaseURL: "https://mkayurvedam.firebaseio.com",
-      projectId: "mkayurvedam",
-      storageBucket: "mkayurvedam.appspot.com",
-      messagingSenderId: "730498769972",
-      appId: "1:730498769972:web:6e926fc583ce6c17"
-  },'angularfs'),
-  AngularFirestoreModule,
-  FlexLayoutModule
+    }),
+    AngularFireModule.initializeApp(
+      {
+        apiKey: "AIzaSyBpet62ZKXbFmRquSONCvJ_PNJP1FTItGE",
+        authDomain: "mkayurvedam.firebaseapp.com",
+        databaseURL: "https://mkayurvedam.firebaseio.com",
+        projectId: "mkayurvedam",
+        storageBucket: "mkayurvedam.appspot.com",
+        messagingSenderId: "730498769972",
+        appId: "1:730498769972:web:6e926fc583ce6c17"
+      }, 'angularfs'),
+    AngularFirestoreModule,
+
+    AngularFireAuthModule,
+    AngularFireStorageModule,
+    AngularFireFunctionsModule,
+    FlexLayoutModule
 
   ],
-  providers: [],
+  providers: [AuthGuard, AuthService, NotifyService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
