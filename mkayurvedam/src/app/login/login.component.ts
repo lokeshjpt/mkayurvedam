@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   printUser(event) {
 
 
-    this.router.navigate(['']);
+    this.router.navigate(['/visits']);
 
     sessionStorage.setItem('userLoggedIn', 'true');
   }

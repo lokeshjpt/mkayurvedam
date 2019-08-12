@@ -1,3 +1,4 @@
+import { AuthService } from './service/auth.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -7,18 +8,51 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'mkayurvedam';
+  title = 'Radha Krishna Ayurvedam';
 
-  constructor(private router: Router){}
+
+  isValid = false;
+
+  navLinks = [
+    {
+      path: 'patients',
+      label: 'Patients'
+    },
+    {
+      path: 'problems',
+      label: 'Problems'
+    },
+    {
+      path: 'visits',
+      label: 'Visits'
+    }
+
+  ];
+
+
+  constructor(private auth: AuthService, private router: Router){
+
+    if (auth.authenticated) {
+      this.isValid = true;
+    }
+
+  }
+
+  logout(){
+    console.log('signout');
+    this.auth.signOut();
+    this.router.navigate(['/home']);
+    location.reload();
+  }
 
   printUser(event) {
-    console.log(event);
-    console.log('test');
-    this.router.navigate(['/visits']);
+    sessionStorage.setItem('userLoggedIn', 'true');
+
+    location.reload();
   }
 
   printError(event) {
-   console.error(event);
-  }
+    console.error(event);
+   }
 
 }

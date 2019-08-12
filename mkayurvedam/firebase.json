@@ -1,6 +1,7 @@
 {
   "hosting": [
     {
+      "target" : "mkayurvedam",
       "public": "dist/mkayurvedam",
       "ignore": [
         "firebase.json",

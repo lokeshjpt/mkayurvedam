@@ -71,11 +71,11 @@ get authenticated(): boolean {
   );
 
   var usr = null;
-  console.log(this.user.subscribe((data) => {
+  this.user.subscribe((data) => {
     usr = data;
-    console.log('usr ',usr);
-  }
-    ));
+   // console.log('usr ',usr);
+  });
+
   return usr !==null;
 
 }
@@ -163,8 +163,9 @@ get currentUserObservable(): any {
   }
 
   signOut() {
+
     this.afAuth.auth.signOut().then(() => {
-      this.router.navigate(['/login']);
+      //this.router.navigate(['/home']);
     });
   }
 

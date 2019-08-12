@@ -1,3 +1,4 @@
+import { AppComponent } from './app.component';
 import { LabResultsComponent } from './lab-results/lab-results.component';
 import { RxComponent } from './rx/rx.component';
 import { ProblemsComponent } from './problems/problems.component';
@@ -12,14 +13,6 @@ import { AuthGuard } from './service/auth.guard';
 const routes: Routes = [
 
   {
-    path:'',
-    component:VisitsComponent
-  },
-  {
-    path:'login',
-    component:LoginComponent
-  },
-  {
     path:'patients',
     component:PatientsComponent, canActivate: [AuthGuard]
   },
@@ -30,14 +23,6 @@ const routes: Routes = [
   {
     path:'visits',
     component:VisitsComponent, canActivate: [AuthGuard]
-  },
-  {
-    path:'rx',
-    component:RxComponent, canActivate: [AuthGuard]
-  },
-  {
-    path:'lab-results',
-    component:LabResultsComponent, canActivate: [AuthGuard]
   }
 ];
 

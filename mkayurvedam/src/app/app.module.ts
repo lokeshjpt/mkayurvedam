@@ -1,6 +1,10 @@
+import { DataService } from './service/data.service';
+import { DeleteDialogComponent } from './patients/dialogs/delete/delete.dialog.component';
+import { EditDialogComponent } from './patients/dialogs/edit/edit.dialog.component';
+import { AddDialogComponent } from './patients/dialogs/add/add.dialog.component';
 import { AuthService } from './service/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule , CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,6 +37,18 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { NotifyService } from './service/notify.service';
+import {MatTabsModule} from '@angular/material/tabs';
+
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material';
+
+
+
+import {HttpClientModule} from '@angular/common/http';
+import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule, MatCheckboxModule } from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +60,10 @@ import { NotifyService } from './service/notify.service';
     VisitsComponent,
     LabResultsComponent,
     RxComponent,
-    LoginComponent
+    LoginComponent,
+    AddDialogComponent,
+    EditDialogComponent,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -52,9 +71,18 @@ import { NotifyService } from './service/notify.service';
     BrowserAnimationsModule,
     LayoutModule,
     MatToolbarModule,
+    MatExpansionModule,
+    MatTabsModule,
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
+    MatDialogModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    HttpClientModule,
     MatListModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     MatTableModule,
@@ -87,7 +115,12 @@ import { NotifyService } from './service/notify.service';
     FlexLayoutModule
 
   ],
-  providers: [AuthGuard, AuthService, NotifyService],
+  entryComponents: [
+    AddDialogComponent,
+    EditDialogComponent,
+    DeleteDialogComponent
+  ],
+  providers: [AuthGuard, AuthService, NotifyService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
