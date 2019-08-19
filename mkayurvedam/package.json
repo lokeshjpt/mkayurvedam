@@ -29,7 +29,7 @@
     "firebase": "^6.3.4",
     "flex-layout": "^1.0.1",
     "ngx-auth-firebaseui": "^3.3.0",
-    "rxjs": "~6.4.0",
+    "rxjs": "^6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },

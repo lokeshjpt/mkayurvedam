@@ -9,7 +9,6 @@ import { NgModule , CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppNavComponent } from './app-nav/app-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -53,7 +52,6 @@ import { MatFormFieldModule, MatCheckboxModule } from '@angular/material';
 @NgModule({
   declarations: [
     AppComponent,
-    AppNavComponent,
     AppTableComponent,
     PatientsComponent,
     ProblemsComponent,

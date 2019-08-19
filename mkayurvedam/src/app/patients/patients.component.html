@@ -1,113 +1,70 @@
-<div class="container mat-elevation-z8" >
-
-  <div class="form">
-    <mat-form-field floatPlaceholder="never" color="accent">
-      <input matInput #filter placeholder="Filter issues">
-    </mat-form-field>
-  </div>
-
-  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell" [multiTemplateDataRows]="true">
-
-
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="title">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.title}}</mat-cell>
-    </ng-container>
-
-
-    <ng-container matColumnDef="state">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>State</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.state}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="url">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Url</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.url}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="created_at">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Created at</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.created_at}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="updated_at">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Updated at</mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.updated_at}}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="expandedDetail">
-        <mat-cell *matCellDef="let row" [attr.colspan]="displayedColumns.length"
-          >
-          <div >
-            Details for Details for Details forDetails forDetails forDetails forDetails forDetails forDetail
-            Details for Details forDetails forDetails forDetails forDetails forDetails forDetails forDetails for
-            Details forDetails forDetails forDetails forDetails forDetails forDetails forDetails forDetails forDetails for
-            Details forDetails forDetails forDetails forDetails forDetails forDetails forDetails for
-            Details forDetails forDetails forDetails forDetails forDetails for
-          </div>
-        </mat-cell>
-      </ng-container>
-
-    <!-- actions -->
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button color="primary" (click)="addNew()">
-          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-          Create
-        </button>
-      </mat-header-cell>
-
-      <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="primary"
-          (click)="startEdit(i, row.id, row.title, row.state, row.url, row.created_at, row.updated_at)">
-          <mat-icon aria-label="Edit" >edit</mat-icon>
-        </button>
-
-        <button mat-icon-button color="primary" (click)="deleteItem(i, row.id, row.title, row.state, row.url)">
-          <mat-icon aria-label="Delete">delete</mat-icon>
-        </button>
-
-        <button mat-icon-button  (click)="deleteItem(i, row.id, row.title, row.state, row.url)">
-            <mat-icon aria-label="Select" color="primary">touch_app</mat-icon>
-        </button>
-
-       <!-- <button mat-icon-button  (click)="deleteItem(i, row.id, row.title, row.state, row.url)">
-            <mat-icon aria-label="Select" color="primary">remove_red_eye</mat-icon>
-        </button>-->
-
-
-
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="toggleExpandableSymbol(row.symbol)"></mat-row>
-    <mat-row class="expandable-row" *matRowDef="let row; columns: ['expandedDetail'];">
-    </mat-row>
-
-
-
-  </mat-table>
-
-
-  <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
-    No results
-  </div>
-
-  <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]">
-  </mat-paginator>
-</div>
-
-
-<!--
 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap  >
-    <div fxFlex="50%">dsafdsfadsfdasfdasfdsafdsafdsfdsfdsafdsfadsfadsfdasf dsafdsfadsfdasfdasfdsafdsafdsfdsfdsafdsfadsfadsfdasf dsafdsfadsfdasfdasfdsafdsafdsfdsfdsafdsfadsfadsfdasf</div>
-    <div fxFlex="50%">dsafdsfadsfdasfdasfdsafdsafdsfdsfdsafdsfadsfadsfdasf</div>
+  <div fxFlex="60%">
+    <div class="form">
+
+      <div>
+
+        <button mat-stroked-button color="primary">Add Patient</button>
+      </div> &nbsp;&nbsp;&nbsp;
+      <mat-form-field floatPlaceholder="never" >
+        <input matInput #filter placeholder="Filter Patients">
+      </mat-form-field>
+
+
+
+    </div>
+
+  </div>
+
+
+  <div fxFlex="40%">
+
+
+    <mat-paginator #paginator
+  [length]="totalRows$ | async"
+  [pageIndex]="0"
+  [pageSize]="10"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+></mat-paginator>
+
+  </div>
 </div>
--->
+
+
+
+
+
+
+
+<mat-accordion displayMode="flat"  class="mat-table">
+  <section matSort class="mat-elevation-z2 mat-header-row">
+    <span class="mat-header-cell" mat-sort-header="vesselName">Name</span>
+    <span class="mat-header-cell" mat-sort-header="vesselId">Vessel Id</span>
+    <span class="mat-header-cell" mat-sort-header="vesselStatus">Status</span>
+    <span class="mat-header-cell" mat-sort-header="ircs">IRCS</span>
+  </section>
+
+  <mat-expansion-panel *ngFor="let item of displayedRows$ | async; let i = index"  id="{{i}}" >
+    <mat-expansion-panel-header class="mat-row" >
+      <span class="mat-cell">{{item.vesselName}}</span>
+      <span class="mat-cell">{{item.vesselId}}</span>
+      <span class="mat-cell">{{item.vesselStatus}}</span>
+      <span class="mat-cell">{{item.ircs}}</span>
+    </mat-expansion-panel-header>
+
+
+    <div><pre>{{item | json}}</pre>
+
+
+    Index {{i}}
+    </div>
+
+    <mat-action-row>
+     <button mat-stroked-button color="primary" >Edit</button>&nbsp;
+      <button mat-stroked-button color="primary" >Delete</button>&nbsp;
+      <button mat-stroked-button color="primary" >View</button>&nbsp;
+      <button mat-stroked-button color="primary" (click)="select(i)">Select</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+</mat-accordion>

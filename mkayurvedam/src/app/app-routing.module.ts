@@ -5,9 +5,7 @@ import { ProblemsComponent } from './problems/problems.component';
 import { PatientsComponent } from './patients/patients.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppNavComponent } from './app-nav/app-nav.component';
 import { VisitsComponent } from './visits/visits.component';
-import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './service/auth.guard';
 
 const routes: Routes = [
