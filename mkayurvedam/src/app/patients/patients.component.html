@@ -1,17 +1,27 @@
-<div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap  >
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap>
   <div fxFlex="60%">
     <div class="form">
 
       <div>
 
-        <button mat-stroked-button color="primary">Add Patient</button>
+        <button mat-stroked-button color="primary" (click)="openDialog()">Add Patient</button>
       </div> &nbsp;&nbsp;&nbsp;
-      <mat-form-field floatPlaceholder="never" >
+      <mat-form-field style="width:100px;
+      max-width:100px;">
+          <mat-select #filterBy [(value)]="selected" placeholder="Filter By" style="width:100%;
+          max-width:100%;">
+            <mat-option value="name" >Name</mat-option>
+            <mat-option value="age">Age</mat-option>
+            <mat-option value="dob">Date of Birth</mat-option>
+            <mat-option value="phone">Phone</mat-option>
+            <mat-option value="city">City</mat-option>
+          </mat-select>
+        </mat-form-field>
+        &nbsp;
+      <mat-form-field floatPlaceholder="never">
         <input matInput #filter placeholder="Filter Patients">
-      </mat-form-field>
-
-
-
+      </mat-form-field> &nbsp; <button color="primary" mat-stroked-button mat-button (click)="filterPatients(filter.value, filterBy.value)">Go</button>
+      &nbsp;&nbsp;
     </div>
 
   </div>
@@ -20,12 +30,8 @@
   <div fxFlex="40%">
 
 
-    <mat-paginator #paginator
-  [length]="totalRows$ | async"
-  [pageIndex]="0"
-  [pageSize]="10"
-  [pageSizeOptions]="[5, 10, 25, 100]"
-></mat-paginator>
+    <mat-paginator #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
   </div>
 </div>
@@ -35,36 +41,47 @@
 
 
 
-
 <mat-accordion displayMode="flat"  class="mat-table">
   <section matSort class="mat-elevation-z2 mat-header-row">
     <span class="mat-header-cell" mat-sort-header="vesselName">Name</span>
-    <span class="mat-header-cell" mat-sort-header="vesselId">Vessel Id</span>
-    <span class="mat-header-cell" mat-sort-header="vesselStatus">Status</span>
-    <span class="mat-header-cell" mat-sort-header="ircs">IRCS</span>
+    <span class="mat-header-cell" mat-sort-header="vesselId">Age</span>
+    <span class="mat-header-cell" mat-sort-header="vesselStatus">Gender</span>
+    <span class="mat-header-cell" mat-sort-header="ircs">City</span>
   </section>
 
-  <mat-expansion-panel *ngFor="let item of displayedRows$ | async; let i = index"  id="{{i}}" >
-    <mat-expansion-panel-header class="mat-row" >
-      <span class="mat-cell">{{item.vesselName}}</span>
-      <span class="mat-cell">{{item.vesselId}}</span>
-      <span class="mat-cell">{{item.vesselStatus}}</span>
-      <span class="mat-cell">{{item.ircs}}</span>
+  <mat-expansion-panel  *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
+    <mat-expansion-panel-header class="mat-row">
+      <span class="mat-cell">{{item.name}}</span>
+      <span class="mat-cell">{{item.age}}</span>
+      <span class="mat-cell">{{item.gender}}</span>
+      <span class="mat-cell">{{item.city}}</span>
     </mat-expansion-panel-header>
 
 
-    <div><pre>{{item | json}}</pre>
-
-
-    Index {{i}}
+    <div style="font-weight: lighter">
+        <b>Date of Birth:</b><br/>
+        {{item.dob.seconds * 1000 | date : 'MMM d, y'}}<br/>
+        <b>Address:</b><br/>
+          {{item.address}} <br/> {{item.state}} | {{item.city}} | {{item.pincode}}<br/>
+        <b>Email Address:</b><br/>
+          {{item.emailId}} <br/>
+        <b>Phone:</b><br/>
+          {{item.phone}} <br/>
+          <b>Created On :</b><br/>
+          {{item.createdOn.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
+          <b>Updated At :</b><br/>
+          {{item.updatedAt.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
     </div>
 
+
+
     <mat-action-row>
-     <button mat-stroked-button color="primary" >Edit</button>&nbsp;
-      <button mat-stroked-button color="primary" >Delete</button>&nbsp;
-      <button mat-stroked-button color="primary" >View</button>&nbsp;
-      <button mat-stroked-button color="primary" (click)="select(i)">Select</button>
+      <button mat-stroked-button color="primary" (click)="openDialog(item)">Edit</button>&nbsp;
+      <button mat-stroked-button color="primary" (click)="deletePatient(item.id)">Delete</button>&nbsp;
+      <button mat-stroked-button color="primary" (click)="select(item)">Select</button>
     </mat-action-row>
   </mat-expansion-panel>
+
+
 
 </mat-accordion>

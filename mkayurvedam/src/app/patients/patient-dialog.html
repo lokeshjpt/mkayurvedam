@@ -1,0 +1,62 @@
+<h1 mat-dialog-title>Add/Edit Patient</h1>
+<div mat-dialog-content>
+
+ <div class="example-container">
+  <mat-form-field>
+    <input matInput placeholder="Name" [(ngModel)]="data.name">
+  </mat-form-field>
+
+  <mat-form-field>
+      <input matInput placeholder="Age" [(ngModel)]="data.age">
+  </mat-form-field>
+
+  <mat-form-field>
+      <mat-select placeholder="Gender" [(ngModel)]="data.gender">
+        <mat-option value="Male">Male</mat-option>
+        <mat-option value="Female">Female</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Date of Birth" [(ngModel)]="data.dob">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput placeholder="Address" [(ngModel)]="data.address"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+      <input matInput placeholder="State" [(ngModel)]="data.state">
+  </mat-form-field>
+
+  <mat-form-field>
+      <input matInput placeholder="City" [(ngModel)]="data.city">
+  </mat-form-field>
+
+  <mat-form-field>
+      <input matInput placeholder="Country" [(ngModel)]="data.country">
+  </mat-form-field>
+
+  <mat-form-field>
+      <input matInput placeholder="Pincode" [(ngModel)]="data.pincode">
+  </mat-form-field>
+
+  <mat-form-field>
+      <input matInput placeholder="EmailId" [(ngModel)]="data.emailId">
+  </mat-form-field>
+
+  <mat-form-field>
+      <input matInput placeholder="Phone Number" [(ngModel)]="data.phone">
+  </mat-form-field>
+
+
+</div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+
+</div>

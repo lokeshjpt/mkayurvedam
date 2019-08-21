@@ -5,6 +5,7 @@ import { AddDialogComponent } from './patients/dialogs/add/add.dialog.component'
 import { AuthService } from './service/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule , CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {MatSelectModule} from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,7 +22,7 @@ import { AppTableComponent } from './app-table/app-table.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { PatientsComponent } from './patients/patients.component';
+import { PatientsComponent, PatientDialog } from './patients/patients.component';
 import { ProblemsComponent } from './problems/problems.component';
 import { VisitsComponent } from './visits/visits.component';
 import { LabResultsComponent } from './lab-results/lab-results.component';
@@ -40,13 +41,15 @@ import {MatTabsModule} from '@angular/material/tabs';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
-import { MatExpansionModule } from '@angular/material';
+import { MatExpansionModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
 
 
 import {HttpClientModule} from '@angular/common/http';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatCheckboxModule } from '@angular/material';
+import { SharedDataService } from './service/shared-data.service';
+
 
 
 @NgModule({
@@ -61,7 +64,8 @@ import { MatFormFieldModule, MatCheckboxModule } from '@angular/material';
     LoginComponent,
     AddDialogComponent,
     EditDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    PatientDialog
   ],
   imports: [
     BrowserModule,
@@ -71,6 +75,8 @@ import { MatFormFieldModule, MatCheckboxModule } from '@angular/material';
     MatToolbarModule,
     MatExpansionModule,
     MatTabsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
@@ -79,6 +85,7 @@ import { MatFormFieldModule, MatCheckboxModule } from '@angular/material';
     MatFormFieldModule,
     MatCheckboxModule,
     ReactiveFormsModule,
+    MatSelectModule,
     MatInputModule,
     HttpClientModule,
     MatListModule,
@@ -116,9 +123,13 @@ import { MatFormFieldModule, MatCheckboxModule } from '@angular/material';
   entryComponents: [
     AddDialogComponent,
     EditDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    PatientsComponent,
+    PatientDialog
   ],
-  providers: [AuthGuard, AuthService, NotifyService, DataService],
+
+  providers: [AuthGuard, AuthService, NotifyService, DataService, SharedDataService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,15 +1,18 @@
 import { AuthService } from './service/auth.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedDataService } from './service/shared-data.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'Radha Krishna Ayurvedam';
+export class AppComponent implements OnInit{
 
+
+  title = 'Radha Krishna Ayurvedam';
+  selectedPatient: string = "";
 
   isValid = false;
 
@@ -30,12 +33,16 @@ export class AppComponent {
   ];
 
 
-  constructor(private auth: AuthService, private router: Router){
+  constructor(private auth: AuthService, private router: Router, private data: SharedDataService){
 
     if (auth.authenticated) {
       this.isValid = true;
     }
 
+  }
+
+  ngOnInit() {
+    this.data.currentMessage.subscribe(selectedPatient => this.selectedPatient = selectedPatient)
   }
 
   logout(){

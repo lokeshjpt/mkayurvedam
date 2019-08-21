@@ -1,10 +1,24 @@
 <mat-toolbar color="primary">
 
-    <mat-icon >local_hospital</mat-icon>
-      <span style="font-weight: lighter">&nbsp;{{title}}</span>
-      <span class="example-fill-remaining-space"></span>
+  <mat-toolbar-row>
 
+    <a mat-button href="/" style="padding-left:0px"><mat-icon >local_hospital</mat-icon><span style="font-weight: lighter;font-size:18px">&nbsp;{{title}}</span></a>
+
+      <span class="example-fill-remaining-space"></span>
+      <div [fxHide.lt-sm]="true">
+          &nbsp; <a mat-button >
+              <span style="font-weight: lighter; font-size: 13px">{{selectedPatient}}</span>
+          </a>
+          &nbsp;
+        </div>
       <span><ngx-auth-firebaseui-avatar (onSignOut)="logout()"></ngx-auth-firebaseui-avatar></span>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row [fxHide.gt-xs]="true">
+        <a mat-button >
+            <span style="font-weight: lighter; font-size: 13px">{{selectedPatient}}</span>
+        </a>
+    </mat-toolbar-row>
 
 </mat-toolbar>
 
