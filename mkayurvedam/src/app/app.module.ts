@@ -1,7 +1,5 @@
 import { DataService } from './service/data.service';
-import { DeleteDialogComponent } from './patients/dialogs/delete/delete.dialog.component';
-import { EditDialogComponent } from './patients/dialogs/edit/edit.dialog.component';
-import { AddDialogComponent } from './patients/dialogs/add/add.dialog.component';
+
 import { AuthService } from './service/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule , CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
@@ -23,8 +21,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { PatientsComponent, PatientDialog } from './patients/patients.component';
-import { ProblemsComponent } from './problems/problems.component';
-import { VisitsComponent } from './visits/visits.component';
+import { ProblemsComponent, ProblemDialog } from './problems/problems.component';
+import { VisitsComponent, VisitDialog } from './visits/visits.component';
 import { LabResultsComponent } from './lab-results/lab-results.component';
 import { RxComponent } from './rx/rx.component';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
@@ -62,10 +60,11 @@ import { SharedDataService } from './service/shared-data.service';
     LabResultsComponent,
     RxComponent,
     LoginComponent,
-    AddDialogComponent,
-    EditDialogComponent,
-    DeleteDialogComponent,
-    PatientDialog
+    PatientDialog,
+    ProblemsComponent,
+    ProblemDialog,
+    VisitsComponent,
+    VisitDialog
   ],
   imports: [
     BrowserModule,
@@ -121,11 +120,12 @@ import { SharedDataService } from './service/shared-data.service';
 
   ],
   entryComponents: [
-    AddDialogComponent,
-    EditDialogComponent,
-    DeleteDialogComponent,
     PatientsComponent,
-    PatientDialog
+    PatientDialog,
+    ProblemsComponent,
+    ProblemDialog,
+    VisitsComponent,
+    VisitDialog
   ],
 
   providers: [AuthGuard, AuthService, NotifyService, DataService, SharedDataService],

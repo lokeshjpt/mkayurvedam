@@ -1,0 +1,61 @@
+<h1 mat-dialog-title>Add/Edit Problem</h1>
+<div mat-dialog-content>
+
+ <div class="example-container">
+  <mat-form-field>
+    <input matInput required placeholder="Problem Title" [(ngModel)]="data.title">
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput required placeholder="Problem Description" [(ngModel)]="data.description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput required placeholder="Symptoms" [(ngModel)]="data.symptoms"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput required placeholder="Diagnosis History" [(ngModel)]="data.diagnosisHistory"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput required placeholder="Treatment History" [(ngModel)]="data.treatmentHistory"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput required placeholder="Sugical History" [(ngModel)]="data.surgicalHistory"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput required placeholder="Medicines Used" [(ngModel)]="data.medicinesUsed"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select required placeholder="Status" [(ngModel)]="data.status">
+      <mat-option value="New">New</mat-option>
+      <mat-option value="Diagnosis">Diagnosis</mat-option>
+      <mat-option value="Treatment">Treatment</mat-option>
+      <mat-option value="Resolved">Resolved</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+  <mat-form-field>
+      <mat-select required placeholder="Using Ayurvedam" [(ngModel)]="data.usingAyurvedam">
+        <mat-option value="Yes">Yes</mat-option>
+        <mat-option value="No">No</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+
+
+
+</div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+
+</div>

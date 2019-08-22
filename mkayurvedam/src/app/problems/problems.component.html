@@ -1,1 +1,85 @@
-<p>problems works!</p>
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap>
+  <div fxFlex="60%">
+    <div class="form" style="padding-left:2px;">
+
+      <div [fxHide.xs]="true">
+
+        <button mat-stroked-button color="primary"  (click)="openDialog()">Add Problem</button>
+        </div> &nbsp;&nbsp;
+      <mat-form-field style="width:60px" >
+          <mat-select #filterBy [(value)]="selected" placeholder="Filter By" >
+            <mat-option value="title" >Title</mat-option>
+            <mat-option value="status">Status</mat-option>
+          </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;
+      <mat-form-field floatPlaceholder="never" style="width:120px">
+        <input matInput #filter placeholder="Filter Problems" (keydown.enter)="filterProblems(filter.value, filterBy.value)">
+        <button color="primary" matSuffix mat-icon-button (click)="filterProblems(filter.value, filterBy.value)"><mat-icon>search</mat-icon></button>
+      </mat-form-field>
+
+    </div>
+
+  </div>
+
+
+  <div fxFlex="40%"  fxLayout.xs="column"  >
+
+
+    <button mat-stroked-button style="margin-left:2px;margin-right:2px" color="primary" [fxShow.xs]="true" [fxHide.gt-xs]="true"  (click)="openDialog()">Add Problem</button>
+    <mat-paginator #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+</div>
+
+<span style="margin-top:1px;padding:0px" [fxShow.xs]="true" [fxHide.gt-xs]="true">&nbsp;</span>
+
+<mat-accordion displayMode="flat"  class="mat-table">
+  <section matSort class="mat-elevation-z2 mat-header-row">
+    <span class="mat-header-cell" mat-sort-header="title">Title</span>
+    <span class="mat-header-cell" mat-sort-header="status">Status</span>
+    <span class="mat-header-cell" mat-sort-header="usingAyurvedam">Using Ayurvedam</span>
+  </section>
+
+  <mat-expansion-panel  *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
+    <mat-expansion-panel-header class="mat-row">
+      <span class="mat-cell">{{item.title}}</span>
+      <span class="mat-cell">{{item.status}}</span>
+      <span class="mat-cell">{{item.usingAyurvedam}}</span>
+    </mat-expansion-panel-header>
+
+
+    <div style="font-weight: lighter">
+        <b>Problem Description</b><br/>
+        {{item.description}}<br/>
+        <b>Symptoms:</b><br/>
+          {{item.symptoms}} <br/>
+        <b>Diagnosis History:</b><br/>
+          {{item.diagnosisHistory}} <br/>
+        <b>Treatment History:</b><br/>
+          {{item.treatmentHistory}} <br/>
+          <b>Surgical History:</b><br/>
+          {{item.surgicalHistory}} <br/>
+
+          <b>Medicines Used:</b><br/>
+          {{item.medicinesUsed}} <br/>
+         <!--
+          <b>Created On :</b><br/>
+          {{item.createdOn.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
+          <b>Updated At :</b><br/>
+          {{item.updatedAt.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
+          -->
+    </div>
+
+
+
+    <mat-action-row>
+      <button mat-stroked-button color="primary" (click)="openDialog(item)">Edit</button>&nbsp;
+      <button mat-stroked-button color="primary" (click)="deleteProblem(item.id)">Delete</button>&nbsp;
+      <button mat-stroked-button color="primary" (click)="select(item)">Select</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+
+
+</mat-accordion>

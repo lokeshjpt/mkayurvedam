@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>Add/Edit Problem</h1>
+<div mat-dialog-content>
+
+ <div class="example-container">
+
+
+    <mat-form-field>
+        <textarea matInput required placeholder="Visit Notes" [(ngModel)]="data.notes"></textarea>
+      </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput required placeholder="Labs Ordered" [(ngModel)]="data.labsOrdered"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput required placeholder="Lab Results" [(ngModel)]="data.labResults"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput required placeholder="Rx Order" [(ngModel)]="data.rxOrder"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+      <textarea matInput required placeholder="Recovery Notes" [(ngModel)]="data.recoveryNotes"></textarea>
+    </mat-form-field>
+
+  <mat-form-field>
+      <input matInput required placeholder="Visit Date" [(ngModel)]="data.visitDate">
+  </mat-form-field>
+
+  <mat-form-field>
+      <input matInput required placeholder="Next Visit Date" [(ngModel)]="data.nextVisitDate">
+  </mat-form-field>
+
+
+</div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+
+</div>

@@ -1,15 +1,13 @@
 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap>
   <div fxFlex="60%">
-    <div class="form">
+    <div class="form" style="padding-left:2px;">
 
-      <div>
+      <div [fxHide.xs]="true">
 
-        <button mat-stroked-button color="primary" (click)="openDialog()">Add Patient</button>
-      </div> &nbsp;&nbsp;&nbsp;
-      <mat-form-field style="width:100px;
-      max-width:100px;">
-          <mat-select #filterBy [(value)]="selected" placeholder="Filter By" style="width:100%;
-          max-width:100%;">
+        <button mat-stroked-button color="primary"  (click)="openDialog()">Add Patient</button>
+        </div> &nbsp;&nbsp;
+      <mat-form-field style="width:60px" >
+          <mat-select #filterBy [(value)]="selected" placeholder="Filter By" >
             <mat-option value="name" >Name</mat-option>
             <mat-option value="age">Age</mat-option>
             <mat-option value="dob">Date of Birth</mat-option>
@@ -17,36 +15,34 @@
             <mat-option value="city">City</mat-option>
           </mat-select>
         </mat-form-field>
-        &nbsp;
-      <mat-form-field floatPlaceholder="never">
-        <input matInput #filter placeholder="Filter Patients">
-      </mat-form-field> &nbsp; <button color="primary" mat-stroked-button mat-button (click)="filterPatients(filter.value, filterBy.value)">Go</button>
-      &nbsp;&nbsp;
+        &nbsp;&nbsp;
+      <mat-form-field floatPlaceholder="never" style="width:120px">
+        <input matInput #filter placeholder="Filter Patients" (keydown.enter)="filterPatients(filter.value, filterBy.value)">
+        <button color="primary" matSuffix mat-icon-button (click)="filterPatients(filter.value, filterBy.value)"><mat-icon>search</mat-icon></button>
+      </mat-form-field>
+
     </div>
 
   </div>
 
 
-  <div fxFlex="40%">
+  <div fxFlex="40%"  fxLayout.xs="column"  >
 
 
+    <button mat-stroked-button style="margin-left:2px;margin-right:2px" color="primary" [fxShow.xs]="true" [fxHide.gt-xs]="true"  (click)="openDialog()">Add Patient</button>
     <mat-paginator #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-
+    [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
 </div>
 
-
-
-
-
+<span style="margin-top:1px;padding:0px" [fxShow.xs]="true" [fxHide.gt-xs]="true">&nbsp;</span>
 
 <mat-accordion displayMode="flat"  class="mat-table">
   <section matSort class="mat-elevation-z2 mat-header-row">
-    <span class="mat-header-cell" mat-sort-header="vesselName">Name</span>
-    <span class="mat-header-cell" mat-sort-header="vesselId">Age</span>
-    <span class="mat-header-cell" mat-sort-header="vesselStatus">Gender</span>
-    <span class="mat-header-cell" mat-sort-header="ircs">City</span>
+    <span class="mat-header-cell" mat-sort-header="name">Name</span>
+    <span class="mat-header-cell" mat-sort-header="age">Age</span>
+    <span class="mat-header-cell" mat-sort-header="gender">Gender</span>
+    <span class="mat-header-cell" mat-sort-header="city">City</span>
   </section>
 
   <mat-expansion-panel  *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
@@ -60,17 +56,19 @@
 
     <div style="font-weight: lighter">
         <b>Date of Birth:</b><br/>
-        {{item.dob.seconds * 1000 | date : 'MMM d, y'}}<br/>
+        {{item.dob}}<br/>
         <b>Address:</b><br/>
           {{item.address}} <br/> {{item.state}} | {{item.city}} | {{item.pincode}}<br/>
         <b>Email Address:</b><br/>
           {{item.emailId}} <br/>
         <b>Phone:</b><br/>
           {{item.phone}} <br/>
+         <!--
           <b>Created On :</b><br/>
           {{item.createdOn.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
           <b>Updated At :</b><br/>
           {{item.updatedAt.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
+          -->
     </div>
 
 

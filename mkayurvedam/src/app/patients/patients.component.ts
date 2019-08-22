@@ -75,6 +75,7 @@ export class PatientsComponent {
 
   openDialog(patientObject? : PatientId ): void {
 
+    this.patientRec = new PatientId();
     if(patientObject){
       this.patientRec = patientObject;
     }
@@ -84,10 +85,13 @@ export class PatientsComponent {
       data: this.patientRec
     });
 
+    dialogRef.componentInstance.isCancel = false;
+
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      //this.animal = result.animal;
-      //this.name = result.name;
+      if(dialogRef.componentInstance.isCancel){
+        return;
+      }
+
       console.log(this.patientRec);
       if(patientObject){
 
@@ -201,6 +205,8 @@ export class PatientsComponent {
   }
 
   select(selectedPatient: PatientId): void{
+
+    this.data.setPatientData(selectedPatient);
     this.data.changeMessage(selectedPatient.name + " | "+ selectedPatient.age + " yrs | "
     + selectedPatient.gender + " | "+ selectedPatient.city);
   }
@@ -214,12 +220,13 @@ export class PatientsComponent {
 })
 export class PatientDialog {
 
-  inpName: string;
+  public isCancel: boolean = false;
   constructor(
     public dialogRef: MatDialogRef<PatientDialog>,
     @Inject(MAT_DIALOG_DATA) public data: PatientId) {}
 
   onNoClick(): void {
+    this.isCancel = true;
     this.dialogRef.close();
 
   }
