@@ -191,8 +191,8 @@ export class ProblemsComponent implements OnInit {
 
     const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
     const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
-
-    this.problemsCollection = this.afs.collection('Problem', ref => ref.where(filterBy, '==', q));
+    this.problemsCollection = this.afs.collection('Problem'
+    , ref => ref.where(filterBy, '>=', q ).where(filterBy, '<=', q + '\uf8ff'));
     this.problems = this.problemsCollection.snapshotChanges().pipe(
       map(docArray => {
         return docArray.map(doc => {

@@ -186,7 +186,8 @@ export class PatientsComponent {
     const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
     const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
 
-    this.patientsCollection = this.afs.collection('Patient', ref => ref.where(filterBy, '==', q));
+    this.patientsCollection = this.afs.collection('Patient'
+    , ref => ref.where(filterBy, '>=', q ).where(filterBy, '<=', q + '\uf8ff'));
     this.patients = this.patientsCollection.snapshotChanges().pipe(
       map(docArray => {
         return docArray.map(doc => {

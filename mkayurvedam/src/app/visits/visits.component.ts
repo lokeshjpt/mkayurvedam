@@ -221,7 +221,8 @@ export class VisitsComponent implements OnInit{
     const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
     const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
 
-    this.visitsCollection = this.afs.collection('Visit', ref => ref.where(filterBy, '==', q));
+    this.visitsCollection = this.afs.collection('Visit'
+    , ref => ref.where(filterBy, '>=', q ).where(filterBy, '<=', q + '\uf8ff'));
     this.visits = this.visitsCollection.snapshotChanges().pipe(
       map(docArray => {
         return docArray.map(doc => {
