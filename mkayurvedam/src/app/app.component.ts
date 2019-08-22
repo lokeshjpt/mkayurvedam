@@ -86,12 +86,18 @@ export class PatientsProblemsDialog {
 
   constructor(
     public dialogRef: MatDialogRef<PatientsProblemsDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
+    @Inject(MAT_DIALOG_DATA) public data: any, private dataSvc: SharedDataService) {}
 
   close(): void {
 
     this.dialogRef.close();
 
+  }
+
+  removeProblemSelected(problem: any): void{
+
+    this.dataSvc.problems = this.dataSvc.problems.filter(item => item.id !== problem.id);
+    this.data.problems = this.data.problems.filter((item: any) => item.id !== problem.id);
   }
 
 }
