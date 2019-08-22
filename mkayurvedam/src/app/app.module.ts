@@ -111,7 +111,7 @@ import { SharedDataService } from './service/shared-data.service';
         messagingSenderId: "730498769972",
         appId: "1:730498769972:web:6e926fc583ce6c17"
       }, 'angularfs'),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
 
     AngularFireAuthModule,
     AngularFireStorageModule,

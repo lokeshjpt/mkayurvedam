@@ -75,7 +75,7 @@ export class ProblemsComponent implements OnInit {
    if(this.data.patient == null)
    {
     this._snackBar.open("Please select patient first", "Go",{
-      duration: 5000,
+      duration: 3000,
     });
      this.router.navigate(['/patients']);
      return;

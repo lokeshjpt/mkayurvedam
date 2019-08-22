@@ -27,7 +27,10 @@ export class SharedDataService {
 
   setProblemData(problem: any){
 
-    this.problems.push(problem);
+    if(this.problems.indexOf(problem) == -1){
+      this.problems.push(problem);
+    }
+
     console.log(this.problems);
   }
 

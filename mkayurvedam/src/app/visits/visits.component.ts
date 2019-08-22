@@ -74,7 +74,7 @@ export class VisitsComponent implements OnInit{
    if(this.data.patient == null)
    {
     this._snackBar.open("Please select patient first", "Go",{
-      duration: 5000,
+      duration: 3000,
     });
      this.router.navigate(['/patients']);
      return;
@@ -96,7 +96,7 @@ export class VisitsComponent implements OnInit{
 
       if (this.data.problems == null || this.data.problems.length == 0) {
         this._snackBar.open("Please select problems first", "Go", {
-          duration: 5000,
+          duration: 3000,
         });
         this.router.navigate(['/problems']);
         return;
@@ -139,8 +139,18 @@ export class VisitsComponent implements OnInit{
         //  console.log(data);
           const id = doc.payload.doc.id;
 
+          const probs: Array<any> = new Array<any>();
+
+          data.problemsRef.forEach((problem) => {
+              this.afs.collection('Problem').doc(problem).get().subscribe(doc => {
+                probs.push(doc.data());
+              });
+
+          });
+          data.problemsRef = probs;
+
           return { id, ...data };
-        })
+        });
       }));
 
     this.totalRows$ = this.visits.pipe(map((rows:Array<VisitId>) => rows.length));
@@ -218,6 +228,16 @@ export class VisitsComponent implements OnInit{
           const data = doc.payload.doc.data() as Visit;
         //  console.log(data);
           const id = doc.payload.doc.id;
+
+          const probs: Array<any> = new Array<any>();
+
+          data.problemsRef.forEach((problem) => {
+              this.afs.collection('Problem').doc(problem).get().subscribe(doc => {
+                probs.push(doc.data());
+              });
+
+          });
+          data.problemsRef = probs;
           return { id, ...data };
         })
       }));

@@ -61,6 +61,16 @@
           {{item.rxOrder}} <br/>
           <b>Recovery Notes :</b><br/>
           {{item.recoveryNotes}} <br/>
+          <b>Problems :</b><br/><br/>
+          <div *ngFor="let prob of item.problemsRef" style="margin-left:5px;">
+            <mat-divider></mat-divider>
+
+            <b>Problem:</b><br/>
+            {{prob.title}}<br/>
+            <b>Description:</b><br/>
+            {{prob.description}}
+
+          </div>
 
 
          <!--
