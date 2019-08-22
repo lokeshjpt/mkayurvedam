@@ -1,0 +1,72 @@
+
+<h1 mat-dialog-title>Patient and Problems Selected</h1>
+<div mat-dialog-content style="font-weight: lighter">
+
+ <div class="example-container">
+
+<mat-tab-group >
+    <mat-tab label="Patient" >
+
+      <br/>
+        <b>Name:</b><br/>
+        {{data.patient.name}}<br/>
+        <b>Age:</b><br/>
+        {{data.patient.age}}<br/>
+        <b>Date of Birth:</b><br/>
+        {{data.patient.dob}}<br/>
+        <b>Date of Birth:</b><br/>
+        {{data.patient.dob}}<br/>
+        <b>Address:</b><br/>
+          {{data.patient.address}} <br/> {{data.patient.state}} | {{data.patient.city}} | {{data.patient.pincode}}<br/>
+        <b>Email Address:</b><br/>
+          {{data.patient.emailId}} <br/>
+        <b>Phone:</b><br/>
+          {{data.patient.phone}} <br/>
+
+    </mat-tab>
+    <mat-tab label="Problems"  >
+
+
+         <div *ngFor="let item of data.problems" >
+
+          <mat-divider></mat-divider>
+          <br/>
+            <b>Problem Title</b><br/>
+            {{item.title}}<br/>
+
+
+            <b>Problem Description</b><br/>
+            {{item.description}}<br/>
+
+            <b>Problem Status</b><br/>
+            {{item.status}}<br/>
+
+            <b>Symptoms:</b><br/>
+              {{item.symptoms}} <br/>
+            <b>Diagnosis History:</b><br/>
+              {{item.diagnosisHistory}} <br/>
+            <b>Treatment History:</b><br/>
+              {{item.treatmentHistory}} <br/>
+              <b>Surgical History:</b><br/>
+              {{item.surgicalHistory}} <br/>
+
+              <b>Medicines Used:</b><br/>
+              {{item.medicinesUsed}} <br/>
+
+              <b>Using Ayurvedam</b><br/>
+              {{item.usingAyurvedam}}<br/>
+
+         </div>
+
+
+
+    </mat-tab>
+  </mat-tab-group>
+</div>
+</div>
+
+<div mat-dialog-actions style="float: right">
+
+    <button mat-stroked-button (click)="close()" color="primary" >Close</button>
+
+  </div>

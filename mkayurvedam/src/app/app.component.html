@@ -6,7 +6,7 @@
 
       <span class="example-fill-remaining-space"></span>
       <div [fxHide.lt-sm]="true">
-          &nbsp; <a mat-button >
+          &nbsp; <a mat-button (click)="showPatientAndProblemsSelected()" >
               <span style="font-weight: lighter; font-size: 13px">{{selectedPatient}}</span>
           </a>
           &nbsp;
@@ -15,7 +15,7 @@
     </mat-toolbar-row>
 
     <mat-toolbar-row [fxHide.gt-xs]="true">
-        <a mat-button >
+        <a mat-button (click)="showPatientAndProblemsSelected()">
             <span style="font-weight: lighter; font-size: 13px">{{selectedPatient}}</span>
         </a>
     </mat-toolbar-row>

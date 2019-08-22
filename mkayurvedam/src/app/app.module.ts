@@ -1,12 +1,12 @@
-import { DataService } from './service/data.service';
 
 import { AuthService } from './service/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule , CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {MatSelectModule} from '@angular/material/select';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent, PatientsProblemsDialog } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -23,8 +23,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { PatientsComponent, PatientDialog } from './patients/patients.component';
 import { ProblemsComponent, ProblemDialog } from './problems/problems.component';
 import { VisitsComponent, VisitDialog } from './visits/visits.component';
-import { LabResultsComponent } from './lab-results/lab-results.component';
-import { RxComponent } from './rx/rx.component';
+
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
@@ -36,13 +35,9 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { NotifyService } from './service/notify.service';
 import {MatTabsModule} from '@angular/material/tabs';
-
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
-
-
-
 import {HttpClientModule} from '@angular/common/http';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatCheckboxModule } from '@angular/material';
@@ -57,8 +52,7 @@ import { SharedDataService } from './service/shared-data.service';
     PatientsComponent,
     ProblemsComponent,
     VisitsComponent,
-    LabResultsComponent,
-    RxComponent,
+    PatientsProblemsDialog,
     LoginComponent,
     PatientDialog,
     ProblemsComponent,
@@ -76,6 +70,7 @@ import { SharedDataService } from './service/shared-data.service';
     MatTabsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatBottomSheetModule,
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
@@ -125,10 +120,11 @@ import { SharedDataService } from './service/shared-data.service';
     ProblemsComponent,
     ProblemDialog,
     VisitsComponent,
-    VisitDialog
+    VisitDialog,
+    PatientsProblemsDialog
   ],
 
-  providers: [AuthGuard, AuthService, NotifyService, DataService, SharedDataService],
+  providers: [AuthGuard, AuthService, NotifyService, SharedDataService],
 
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,5 @@
 import { AppComponent } from './app.component';
-import { LabResultsComponent } from './lab-results/lab-results.component';
-import { RxComponent } from './rx/rx.component';
+
 import { ProblemsComponent } from './problems/problems.component';
 import { PatientsComponent } from './patients/patients.component';
 import { NgModule } from '@angular/core';

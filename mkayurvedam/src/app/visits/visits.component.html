@@ -44,7 +44,7 @@
 
   <mat-expansion-panel  *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
     <mat-expansion-panel-header class="mat-row">
-      <span class="mat-cell">{{item.notes}}</span>
+      <span class="mat-cell">{{item.notes | slice : 0:20}}..</span>
       <span class="mat-cell">{{item.visitDate}}</span>
       <span class="mat-cell">{{item.nextVisitDate}}</span>
     </mat-expansion-panel-header>
