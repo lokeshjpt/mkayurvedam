@@ -26,7 +26,7 @@
   <div fxFlex="40%"  fxLayout.xs="column"  >
 
 
-    <button mat-stroked-button style="margin-left:2px;margin-right:2px" color="primary" [fxShow.xs]="true" [fxHide.gt-xs]="true"  (click)="openDialog()">Add Problem</button>
+    <button mat-stroked-button style="margin-left:2px;margin-right:2px" color="primary" [fxShow.xs]="true" [fxHide.gt-xs]="true"  (click)="openDialog()">Add Visit</button>
     <mat-paginator #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
