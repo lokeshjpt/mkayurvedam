@@ -9,7 +9,7 @@ import { AuthGuard } from './service/auth.guard';
 
 const routes: Routes = [
 
-  {
+  /*{
     path:'patients',
     component:PatientsComponent, canActivate: [AuthGuard]
   },
@@ -17,7 +17,7 @@ const routes: Routes = [
     path:'problems',
     component:ProblemsComponent, canActivate: [AuthGuard]
   },
-  {
+  */{
     path:'visits',
     component:VisitsComponent, canActivate: [AuthGuard]
   }

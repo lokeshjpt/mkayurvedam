@@ -5,31 +5,31 @@
 
 
     <mat-form-field >
-        <textarea matInput required placeholder="Visit Notes" [(ngModel)]="data.notes" rows="10" readonly=true></textarea>
+        <textarea matInput required placeholder="Visit Notes" [(ngModel)]="data.notes" rows="5" readonly=true></textarea>
       </mat-form-field>
 
   <mat-form-field>
-    <textarea matInput required placeholder="Labs Ordered" [(ngModel)]="data.labsOrdered"></textarea>
+    <textarea matInput required placeholder="Labs Ordered" [(ngModel)]="data.labsOrdered" rows="5" readonly=true></textarea>
   </mat-form-field>
 
   <mat-form-field>
-    <textarea matInput required placeholder="Lab Results" [(ngModel)]="data.labResults"></textarea>
+    <textarea matInput required placeholder="Lab Results" [(ngModel)]="data.labResults" rows="5" ></textarea>
   </mat-form-field>
 
   <mat-form-field>
-    <textarea matInput required placeholder="Rx Order" [(ngModel)]="data.rxOrder"></textarea>
+    <textarea matInput required placeholder="Rx Order" [(ngModel)]="data.rxOrder" rows="5" readonly=true></textarea>
   </mat-form-field>
 
   <mat-form-field>
-      <textarea matInput required placeholder="Recovery Notes" [(ngModel)]="data.recoveryNotes"></textarea>
+      <textarea matInput required placeholder="Recovery Notes" [(ngModel)]="data.recoveryNotes" rows="5" readonly=true></textarea>
     </mat-form-field>
 
   <mat-form-field>
-      <input matInput required placeholder="Visit Date" [(ngModel)]="data.visitDate">
+      <input matInput required placeholder="Visit Date" [(ngModel)]="data.visitDate" readonly=true>
   </mat-form-field>
 
   <mat-form-field>
-      <input matInput required placeholder="Next Visit Date" [(ngModel)]="data.nextVisitDate">
+      <input matInput required placeholder="Next Visit Date" [(ngModel)]="data.nextVisitDate" readonly=true>
   </mat-form-field>
 
 

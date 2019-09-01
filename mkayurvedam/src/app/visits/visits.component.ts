@@ -1,3 +1,4 @@
+import { AuthService } from './../service/auth.service';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { AngularFirestoreModule, AngularFirestoreCollection, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
@@ -64,25 +65,14 @@ export class VisitsComponent implements OnInit{
 
   constructor(private afs: AngularFirestore, private data: SharedDataService
     , public dialog: MatDialog, public router: Router
-    ,private _snackBar: MatSnackBar) {
+    , private _snackBar: MatSnackBar, private auth: AuthService) {
 
   }
 
 
   ngOnInit() {
 
-   if(this.data.patient == null)
-   {
-    this._snackBar.open("Please select patient first", "Go",{
-      duration: 3000,
-    });
-     this.router.navigate(['/patients']);
-     return;
-   }
-
-
-
-   this.loadVisits();
+    this.loadVisits();
 
    this.visitRec = new VisitId();
   }
@@ -126,35 +116,57 @@ export class VisitsComponent implements OnInit{
     });
   }
 
-  loadVisits(): void {
+   loadVisits(): void {
 
     const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
     const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
 
-    this.visitsCollection = this.afs.collection('Visit', ref => ref.where('patientRef', '==', this.data.patient.id));
-    this.visits = this.visitsCollection.snapshotChanges().pipe(
-      map(docArray => {
-        return docArray.map(doc => {
-          const data = doc.payload.doc.data() as Visit;
-        //  console.log(data);
-          const id = doc.payload.doc.id;
 
-          const probs: Array<any> = new Array<any>();
+    let patientId:any = null;
+    let patientEmail = null;
+    this.auth.user.subscribe((user:any) => {
+      patientEmail = user.email;
+      console.log(" patient email = "+ patientEmail);
+    });
 
-          data.problemsRef.forEach((problem) => {
-              this.afs.collection('Problem').doc(problem).get().subscribe(doc => {
-                probs.push(doc.data());
-              });
+    this.afs.collection('Patient').ref.where('emailId', '==', patientEmail)
+            .get().then((patient) => {
+                patient.docs.forEach(doc => {
+                  patientId = doc.id;
+                  console.log(" patient id = "+ patientId);
 
-          });
-          data.problemsRef = probs;
+                  this.visitsCollection = this.afs.collection('Visit', ref => ref.where('patientRef', '==', patientId));
+                  this.visits = this.visitsCollection.snapshotChanges().pipe(
+                    map(docArray => {
+                      return docArray.map(doc => {
+                        const data = doc.payload.doc.data() as Visit;
+                      //  console.log(data);
+                        const id = doc.payload.doc.id;
 
-          return { id, ...data };
-        });
-      }));
+                        const probs: Array<any> = new Array<any>();
 
-    this.totalRows$ = this.visits.pipe(map((rows:Array<VisitId>) => rows.length));
-    this.displayedRows$ = this.visits.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
+                        data.problemsRef.forEach((problem) => {
+                            this.afs.collection('Problem').doc(problem).get().subscribe(doc => {
+                              probs.push(doc.data());
+                            });
+
+                        });
+                        data.problemsRef = probs;
+
+                        return { id, ...data };
+                      });
+                    }));
+
+                    this.totalRows$ = this.visits.pipe(map((rows:Array<VisitId>) => rows.length));
+                    this.displayedRows$ = this.visits.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
+
+                });
+    });
+
+
+
+
+
   }
 
 

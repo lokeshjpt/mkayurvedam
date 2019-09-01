@@ -1,28 +1,11 @@
 {
-  "hosting": [
-    {
-      "target" : "mkayurvedam",
-      "public": "dist/mkayurvedam",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ]
-    },
-    {
-      "target": "mkayurvedam",
-      "public": "dist/mkayurvedam",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
-      "rewrites": [
-        {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ]
-    }
-  ]
+  "hosting": {
+    "public": "dist/mkayurvedam",
+    "target": "patients-portal",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
 }

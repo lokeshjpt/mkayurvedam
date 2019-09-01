@@ -1,11 +1,8 @@
 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap>
   <div fxFlex="60%">
-    <div class="form" style="padding-left:2px;">
+    <div class="form" style="padding-left:5px;">
 
-      <div [fxHide.xs]="true">
-
-        <button mat-stroked-button color="primary"  (click)="openDialog()">Add Visit</button>
-        </div> &nbsp;&nbsp;
+      &nbsp;&nbsp;
       <mat-form-field style="width:60px" >
           <mat-select #filterBy [(value)]="selected" placeholder="Filter By" >
             <mat-option value="visitDate" >Visited Date</mat-option>
@@ -26,7 +23,6 @@
   <div fxFlex="40%"  fxLayout.xs="column"  >
 
 
-    <button mat-stroked-button style="margin-left:2px;margin-right:2px" color="primary" [fxShow.xs]="true" [fxHide.gt-xs]="true"  (click)="openDialog()">Add Visit</button>
     <mat-paginator #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10"
     [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
@@ -85,7 +81,6 @@
 
     <mat-action-row>
       <button mat-stroked-button color="primary" (click)="openDialog(item)">Edit</button>&nbsp;
-      <button mat-stroked-button color="primary" (click)="deleteVisit(item.id)">Delete</button>&nbsp;
     </mat-action-row>
   </mat-expansion-panel>
 

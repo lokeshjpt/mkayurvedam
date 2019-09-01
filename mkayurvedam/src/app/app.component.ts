@@ -19,14 +19,7 @@ export class AppComponent implements OnInit{
   isValid = false;
 
   navLinks = [
-    {
-      path: 'patients',
-      label: 'Patients'
-    },
-    {
-      path: 'problems',
-      label: 'Problems'
-    },
+
     {
       path: 'visits',
       label: 'Visits'

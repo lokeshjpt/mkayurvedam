@@ -5,8 +5,8 @@
   "targets": {
     "mkayurvedam": {
       "hosting": {
-        "mkayurvedam": [
-          "mkayurvedam"
+        "patients-portal": [
+          "patients-mkayurvedam"
         ]
       }
     }
