@@ -21,7 +21,7 @@ export class SharedDataService {
 
   setPatientData(patient: any){
     this.patient = patient;
-    console.log(patient);
+    console.log("patient",patient);
     this.problems = new Array<any>();
   }
 

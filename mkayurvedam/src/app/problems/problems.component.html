@@ -36,14 +36,14 @@
 
 <mat-accordion displayMode="flat"  class="mat-table">
   <section matSort class="mat-elevation-z2 mat-header-row">
-    <span class="mat-header-cell" mat-sort-header="title">Title</span>
+    <span class="mat-header-cell" mat-sort-header="title" fxFlex.lg="70%">Title</span>
     <span class="mat-header-cell" mat-sort-header="status">Status</span>
     <span class="mat-header-cell" mat-sort-header="usingAyurvedam">Using Ayurvedam</span>
   </section>
 
   <mat-expansion-panel  *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
     <mat-expansion-panel-header class="mat-row">
-      <span class="mat-cell">{{item.title}}</span>
+      <span class="mat-cell" fxFlex.lg="70%">{{item.title}}</span>
       <span class="mat-cell">{{item.status}}</span>
       <span class="mat-cell">{{item.usingAyurvedam}}</span>
     </mat-expansion-panel-header>

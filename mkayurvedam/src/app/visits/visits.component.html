@@ -36,21 +36,21 @@
 
 <mat-accordion displayMode="flat"  class="mat-table">
   <section matSort class="mat-elevation-z2 mat-header-row">
-    <span class="mat-header-cell" mat-sort-header="notes">Notes</span>
+    <span class="mat-header-cell" mat-sort-header="notes" fxFlex.lg="70%">Notes</span>
     <span class="mat-header-cell" mat-sort-header="visitDate">Visit Date</span>
     <span class="mat-header-cell" mat-sort-header="nextVisitDate">Next Visit Date</span>
 
   </section>
 
-  <mat-expansion-panel  *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
+  <mat-expansion-panel [expanded]="indexExpanded == i" *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
     <mat-expansion-panel-header class="mat-row">
-      <span class="mat-cell">{{item.notes | slice : 0:20}}..</span>
+      <span class="mat-cell" fxFlex.lg="70%">{{item.notes | slice : 0:60}}.. &nbsp;</span>
       <span class="mat-cell">{{item.visitDate}}</span>
       <span class="mat-cell">{{item.nextVisitDate}}</span>
     </mat-expansion-panel-header>
 
 
-    <div style="font-weight: lighter">
+    <div style="font-weight: lighter" id="visit_{{item.id}}">
         <b>Notes:</b><br/>
         {{item.notes}}<br/>
          <b>Labs Ordered:</b><br/>
@@ -61,10 +61,11 @@
           {{item.rxOrder}} <br/>
           <b>Recovery Notes :</b><br/>
           {{item.recoveryNotes}} <br/>
-          <b>Problems :</b><br/><br/>
-          <div *ngFor="let prob of item.problemsRef" style="margin-left:5px;">
-            <mat-divider></mat-divider>
 
+          <b>Problems :</b><br/><br/>
+          <div *ngFor="let prob of item.problemsRef" style="margin-left:3px;">
+
+            <div style="margin-top:7px;border:0px; border-left: 4px solid rgba(25, 77, 175, 0.781) ;padding-left:5px;">
             <b>Problem:</b><br/>
             {{prob.title}}<br/>
             <b>Description:</b><br/>
@@ -72,7 +73,25 @@
 
           </div>
 
+    </div>
+    <div *ngIf="item.visitRxSlipLink">
+    <br/>
+    <b>Rx Slip Download Link:</b><br/>
+    <a href="{{item.visitRxSlipLink}}" target="_blank">Rx Slip Link</a>
+    </div>
+    <br/>
+          <b>Upload Rx Slip:</b>
+          <br/>
+          <input type="file" (change)="upload($event, item, i)" /><br/>
+        <ng-container *ngIf="(uploadProgress | async); let uploadProgress">
+            <mat-progress-bar mode="determinate" *ngIf="uploadProgress !== 100" [value]="uploadProgress"></mat-progress-bar>
+        </ng-container>
+         <!--  <progress max="100" [value]="(uploadProgress | async)"></progress> -->
+         <!--  <div class="container" *ngIf="downloadURL | async; let url">
 
+            <a href="{{url}}" target="_blank">Uploaded File</a>
+          </div>`
+ -->
          <!--
           <b>Created On :</b><br/>
           {{item.createdOn.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
@@ -86,9 +105,12 @@
     <mat-action-row>
       <button mat-stroked-button color="primary" (click)="openDialog(item)">Edit</button>&nbsp;
       <button mat-stroked-button color="primary" (click)="deleteVisit(item.id)">Delete</button>&nbsp;
+      <button mat-stroked-button color="primary" (click)="generatePdf(item)">Print Visit</button>&nbsp;
     </mat-action-row>
   </mat-expansion-panel>
 
 
 
 </mat-accordion>
+
+

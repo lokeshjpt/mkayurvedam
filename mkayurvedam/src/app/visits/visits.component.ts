@@ -1,7 +1,7 @@
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { AngularFirestoreModule, AngularFirestoreCollection, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
-import { Component, Output, EventEmitter, Inject } from '@angular/core';
+import { map, timeout, tap, finalize } from 'rxjs/operators';
+import { Component, Output, EventEmitter, Inject, ViewEncapsulation } from '@angular/core';
 import { ChangeDetectionStrategy, OnInit, ViewChild } from '@angular/core';
 import { Observable  } from 'rxjs';
 import { of  } from 'rxjs';
@@ -13,21 +13,26 @@ import { Timestamp } from 'rxjs/internal/operators/timestamp';
 import { SharedDataService } from '../service/shared-data.service';
 import { Router } from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { AngularFireStorage, AngularFireUploadTask } from 'angularfire2/storage';
 
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 class Visit {
 
   notes: string;
   recoveryNotes: string;
   visitDate: string;
-  labsOrdered:string;
+  labsOrdered: string;
   labResults: string;
   rxOrder: string;
-  nextVisitDate:string;
-  patientRef:string;
-  problemsRef:string[];
-  createdOn:string;
-  updatedAt:string;
+  nextVisitDate: string;
+  patientRef: string;
+  problemsRef: string[];
+  createdOn: string;
+  updatedAt: string;
+  visitRxSlipLink: string;
 }
 class VisitId extends Visit {
   id: string;
@@ -36,16 +41,17 @@ class VisitId extends Visit {
 @Component({
   selector: 'app-vistis',
   templateUrl: './visits.component.html',
-  styleUrls: ['./visits.component.css', 'visits.styles.scss']
+  styleUrls: ['./visits.component.css', 'visits.styles.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 
 
-export class VisitsComponent implements OnInit{
+export class VisitsComponent implements OnInit {
 
 
 
-  selected: string = "visitDate";
+  selected = 'visitDate';
   visitsCollection: AngularFirestoreCollection<Visit>;
   visits: any;
 
@@ -61,23 +67,31 @@ export class VisitsComponent implements OnInit{
 
 
   visitRec: VisitId;
+  indexExpanded = -1;
+
+  uploadProgress: Observable<number>;
+  downloadURL: Observable<any>;
 
   constructor(private afs: AngularFirestore, private data: SharedDataService
-    , public dialog: MatDialog, public router: Router
-    ,private _snackBar: MatSnackBar) {
+    ,         public dialog: MatDialog, public router: Router
+    ,         private _snackBar: MatSnackBar
+    ,         private afStorage: AngularFireStorage
+    ) {
 
   }
 
 
+
   ngOnInit() {
 
-   if(this.data.patient == null)
-   {
-    this._snackBar.open("Please select patient first", "Go",{
+
+
+   if (this.data.patient == null) {
+    this._snackBar.open('Please select patient first', 'Go', {
       duration: 3000,
     });
-     this.router.navigate(['/patients']);
-     return;
+    this.router.navigate(['/patients']);
+    return;
    }
 
 
@@ -87,15 +101,19 @@ export class VisitsComponent implements OnInit{
    this.visitRec = new VisitId();
   }
 
-  openDialog(visitObject? : VisitId ): void {
+  togglePanels(index: number) {
+    this.indexExpanded = index === this.indexExpanded ? -1 : index;
+  }
+
+  openDialog(visitObject?: VisitId ): void {
 
     this.visitRec = new VisitId();
-    if(visitObject){
+    if (visitObject) {
       this.visitRec = visitObject;
-    }else{
+    } else {
 
-      if (this.data.problems == null || this.data.problems.length == 0) {
-        this._snackBar.open("Please select problems first", "Go", {
+      if (this.data.problems == null || this.data.problems.length === 0) {
+        this._snackBar.open('Please select problems first', 'Go', {
           duration: 3000,
         });
         this.router.navigate(['/problems']);
@@ -111,16 +129,15 @@ export class VisitsComponent implements OnInit{
     dialogRef.componentInstance.isCancel = false;
 
     dialogRef.afterClosed().subscribe(result => {
-      if(dialogRef.componentInstance.isCancel){
+      if (dialogRef.componentInstance.isCancel) {
         return;
       }
 
       console.log(this.visitRec);
-      if(visitObject){
+      if (visitObject) {
 
         this.editVisit(this.visitRec);
-      }
-      else{
+      } else {
         this.addVisit(this.visitRec);
      }
     });
@@ -153,14 +170,14 @@ export class VisitsComponent implements OnInit{
         });
       }));
 
-    this.totalRows$ = this.visits.pipe(map((rows:Array<VisitId>) => rows.length));
+    this.totalRows$ = this.visits.pipe(map((rows: Array<VisitId>) => rows.length));
     this.displayedRows$ = this.visits.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
   }
 
 
   addVisit(visit: VisitId): void {
 
-    let problemIds : Array<any> = new Array<any>();
+    const problemIds: Array<any> = new Array<any>();
 
     this.data.problems.forEach(problem => {
       problemIds.push(problem.id);
@@ -176,9 +193,9 @@ export class VisitsComponent implements OnInit{
       rxOrder: visit.rxOrder,
       nextVisitDate: visit.nextVisitDate,
       patientRef: this.data.patient.id,
-      problemsRef:problemIds,
-      createdOn:new Date(),
-      updatedAt:new Date(),
+      problemsRef: problemIds,
+      createdOn: new Date(),
+      updatedAt: new Date(),
 
     };
 
@@ -186,7 +203,7 @@ export class VisitsComponent implements OnInit{
     this.loadVisits();
   }
 
-  editVisit(visit: VisitId): void{
+  editVisit(visit: VisitId): void {
 
     const visitModel: any = {
 
@@ -197,7 +214,7 @@ export class VisitsComponent implements OnInit{
       labResults: visit.labResults,
       rxOrder: visit.rxOrder,
       nextVisitDate: visit.nextVisitDate,
-      updatedAt:new Date(),
+      updatedAt: new Date(),
 
     };
 
@@ -214,9 +231,9 @@ export class VisitsComponent implements OnInit{
 
 
 
-  filterVisits(q: string, filterBy: string): void{
+  filterVisits(q: string, filterBy: string): void {
 
-    if(q && q != ''){
+    if (q && q !== '') {
 
     const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
     const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
@@ -240,16 +257,188 @@ export class VisitsComponent implements OnInit{
           });
           data.problemsRef = probs;
           return { id, ...data };
-        })
+        });
       }));
 
     this.totalRows$ = this.visits.pipe(map((rows: Array<VisitId>) => rows.length));
     this.displayedRows$ = this.visits.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
-    }else{
+    } else {
       this.loadVisits();
     }
   }
 
+   upload(event, visitId: VisitId, i) {
+    const file: File  = event.target.files[0];
+    console.log('file name :', file.name);
+    console.log('VisitId.id :', visitId.id);
+   // this.afStorage.upload('prescriptions/'+file.name, event.target.files[0]);
+
+    const ref = this.afStorage.ref(visitId.id);
+    const task: AngularFireUploadTask = ref.put(event.target.files[0]);
+    task.then(function(result) {
+      // Get URL and store to pass
+      ref.getDownloadURL().subscribe((url) => {
+        console.log('url ', url);
+
+        visitId.visitRxSlipLink = url;
+
+        const visitModel: any = {
+
+              notes: visitId.notes,
+              recoveryNotes: visitId.recoveryNotes,
+              visitDate: visitId.visitDate,
+              labsOrdered: visitId.labsOrdered,
+              labResults: visitId.labResults,
+              rxOrder: visitId.rxOrder,
+              nextVisitDate: visitId.nextVisitDate,
+              updatedAt: new Date(),
+              visitRxSlipLink: visitId.visitRxSlipLink
+
+            };
+        console.log('visitModel ', visitModel);
+        try {
+            this.afs.doc('Visit/' + visitId.id).update(visitModel);
+           } catch {
+             console.error('error while updating visit record');
+           }
+
+      });
+    });
+    this.uploadProgress = task.percentageChanges();
+
+    this.uploadProgress.subscribe((p: any) => {
+      console.log('progress = ', p);
+      if (p === 100) {
+    }
+  });
+
+    return;
+
+}
+
+  generatePdf(visit: Visit) {
+
+    /*notes: string;
+  recoveryNotes: string;
+  visitDate: string;
+  labsOrdered:string;
+  labResults: string;
+  rxOrder: string;
+  nextVisitDate:string;
+  */
+  const documentDefinition = { content:
+                                  [
+                                    {
+                                      text: '--------------------------------------------------------------------------------------------------------',
+                                      bold: true
+                                    },
+                                    {
+                                      text: 'Dr. Murali Krishna Ayurvedic Clinic | Patient Visit Summary',
+                                      bold: true
+                                    },
+                                    {
+                                      text: '--------------------------------------------------------------------------------------------------------',
+                                      bold: true
+                                    },
+                                    {
+                                      text: ' '
+                                    },
+                                    {
+                                      text: 'Visit Date',
+                                      bold: true
+                                    },
+                                    {
+                                      text: visit.visitDate
+
+                                    },
+                                    {
+                                      text: ' '
+                                    },
+                                    {
+                                      text: 'Patient Details',
+                                      bold: true
+                                    },
+                                    {
+                                      text: this.data.patient.name + ' | ' + this.data.patient.age + ' Yrs ' + ' | DOB: ' + this.data.patient.dob + ' | ' + this.data.patient.city
+
+                                    },
+                                    {
+                                      text: ' '
+                                    },
+                                    {
+                                      text: 'Visit Notes',
+                                      bold: true
+                                    },
+                                    {
+                                      text: visit.notes
+
+                                    },
+                                    {
+                                      text: ' '
+                                    },
+
+                                    {
+                                      text: 'Rx Order',
+                                      bold: true
+                                    },
+                                    {
+                                      text: visit.rxOrder
+
+                                    },
+                                    {
+                                      text: ' '
+                                    },
+                                    {
+                                      text: 'Labs Ordered',
+                                      bold: true
+                                    },
+                                    {
+                                      text: visit.labsOrdered
+
+                                    },
+                                    {
+                                      text: ' '
+                                    },
+                                    {
+                                      text: 'Labs Results',
+                                      bold: true
+                                    },
+                                    {
+                                      text: visit.labResults
+
+                                    },
+                                    {
+                                      text: ' '
+                                    },
+                                    {
+                                      text: 'Recovery Notes',
+                                      bold: true
+                                    },
+                                    {
+                                      text: visit.recoveryNotes
+
+                                    },
+                                    {
+                                      text: ' '
+                                    },
+                                    {
+                                      text: 'Next Vist Date',
+                                      bold: true
+                                    },
+                                    {
+                                      text: visit.nextVisitDate
+
+                                    },
+                                    {
+                                      text: ' '
+                                    }
+                                  ]
+                              };
+
+
+  pdfMake.createPdf(documentDefinition).download();
+
+   }
 
 }
 
@@ -260,7 +449,7 @@ export class VisitsComponent implements OnInit{
 })
 export class VisitDialog {
 
-  public isCancel: boolean = false;
+  public isCancel = false;
   constructor(
     public dialogRef: MatDialogRef<VisitDialog>,
     @Inject(MAT_DIALOG_DATA) public data: VisitId) {}

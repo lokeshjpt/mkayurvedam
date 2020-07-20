@@ -37,7 +37,7 @@ import { NotifyService } from './service/notify.service';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
-import { MatExpansionModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatExpansionModule, MatDatepickerModule, MatNativeDateModule, MatProgressBar, MatProgressBarModule } from '@angular/material';
 import {HttpClientModule} from '@angular/common/http';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatCheckboxModule } from '@angular/material';
@@ -86,6 +86,7 @@ import { SharedDataService } from './service/shared-data.service';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     MatTableModule,
     MatPaginatorModule,
+    MatProgressBarModule,
     MatSortModule,
     NgxAuthFirebaseUIModule.forRoot({
       apiKey: "AIzaSyBpet62ZKXbFmRquSONCvJ_PNJP1FTItGE",
