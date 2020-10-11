@@ -42,7 +42,9 @@ import {HttpClientModule} from '@angular/common/http';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatCheckboxModule } from '@angular/material';
 import { SharedDataService } from './service/shared-data.service';
-
+import { DropzoneDirective } from './dropzone.directive';
+import { UploaderComponent } from './uploader/uploader.component';
+import { UploadTaskComponent } from './upload-task/upload-task.component';
 
 
 @NgModule({
@@ -58,7 +60,10 @@ import { SharedDataService } from './service/shared-data.service';
     ProblemsComponent,
     ProblemDialog,
     VisitsComponent,
-    VisitDialog
+    VisitDialog,
+    DropzoneDirective,
+    UploaderComponent,
+    UploadTaskComponent
   ],
   imports: [
     BrowserModule,

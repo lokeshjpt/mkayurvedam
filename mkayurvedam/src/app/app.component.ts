@@ -45,7 +45,17 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.data.currentMessage.subscribe(selectedPatient => this.selectedPatient = selectedPatient)
+
+    if (window.localStorage.getItem('patient')) {
+        this.data.patient = JSON.parse(window.localStorage.getItem('patient'));
+        this.data.changeMessage(this.data.patient.name + " | "+ this.data.patient.age + " yrs | "
+    + this.data.patient.gender + " | "+ this.data.patient.city);
+    }
+    if (window.localStorage.getItem('problems')) {
+      this.data.problems = JSON.parse(window.localStorage.getItem('problems'));
+    }
+    this.data.currentMessage.subscribe(selectedPatient => this.selectedPatient = selectedPatient);
+
   }
 
   logout(){
@@ -57,7 +67,6 @@ export class AppComponent implements OnInit{
 
   printUser(event) {
     sessionStorage.setItem('userLoggedIn', 'true');
-
     location.reload();
   }
 
@@ -70,6 +79,8 @@ export class AppComponent implements OnInit{
     this.dialog.open(PatientsProblemsDialog, {
       minWidth: '95%',
       minHeight: '95%',
+      disableClose: false,
+      hasBackdrop: false,
       data: {"patient": this.data.patient, "problems": this.data.problems}
     });
   }

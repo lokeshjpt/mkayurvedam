@@ -82,6 +82,8 @@ export class PatientsComponent {
     const dialogRef = this.dialog.open(PatientDialog, {
       minWidth: '95%',
       minHeight: '95%',
+      disableClose: false,
+      hasBackdrop: false,
       data: this.patientRec
     });
 

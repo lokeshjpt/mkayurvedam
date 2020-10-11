@@ -94,6 +94,8 @@ export class ProblemsComponent implements OnInit {
     const dialogRef = this.dialog.open(ProblemDialog, {
       minWidth: '95%',
       minHeight: '95%',
+      disableClose: false,
+      hasBackdrop: false,
       data: this.problemRec
     });
 

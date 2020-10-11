@@ -1,21 +1,25 @@
+<mat-progress-bar *ngIf="showProgress" mode="indeterminate"></mat-progress-bar>
 <div class="container" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutWrap>
   <div fxFlex="60%">
     <div class="form" style="padding-left:2px;">
 
       <div [fxHide.xs]="true">
 
-        <button mat-stroked-button color="primary"  (click)="openDialog()">Add Visit</button>
-        </div> &nbsp;&nbsp;
-      <mat-form-field style="width:60px" >
-          <mat-select #filterBy [(value)]="selected" placeholder="Filter By" >
-            <mat-option value="visitDate" >Visited Date</mat-option>
-            <mat-option value="nextVisitDate">Next Visit Date</mat-option>
-          </mat-select>
-        </mat-form-field>
-        &nbsp;&nbsp;
+        <button mat-stroked-button color="primary" (click)="openDialog()">Add Visit</button>
+      </div> &nbsp;&nbsp;
+      <mat-form-field style="width:60px">
+        <mat-select #filterBy [(value)]="selected" placeholder="Filter By">
+          <mat-option value="visitDate">Visited Date</mat-option>
+          <mat-option value="nextVisitDate">Next Visit Date</mat-option>
+        </mat-select>
+      </mat-form-field>
+      &nbsp;&nbsp;
       <mat-form-field floatPlaceholder="never" style="width:120px">
-        <input matInput #filter placeholder="Filter Visits" (keydown.enter)="filterVisits(filter.value, filterBy.value)">
-        <button color="primary" matSuffix mat-icon-button (click)="filterVisits(filter.value, filterBy.value)"><mat-icon>search</mat-icon></button>
+        <input matInput #filter placeholder="Filter Visits"
+          (keydown.enter)="filterVisits(filter.value, filterBy.value)">
+        <button color="primary" matSuffix mat-icon-button (click)="filterVisits(filter.value, filterBy.value)">
+          <mat-icon>search</mat-icon>
+        </button>
       </mat-form-field>
 
     </div>
@@ -23,18 +27,19 @@
   </div>
 
 
-  <div fxFlex="40%"  fxLayout.xs="column"  >
+  <div fxFlex="40%" fxLayout.xs="column">
 
 
-    <button mat-stroked-button style="margin-left:2px;margin-right:2px" color="primary" [fxShow.xs]="true" [fxHide.gt-xs]="true"  (click)="openDialog()">Add Visit</button>
+    <button mat-stroked-button style="margin-left:2px;margin-right:2px" color="primary" [fxShow.xs]="true"
+      [fxHide.gt-xs]="true" (click)="openDialog()">Add Visit</button>
     <mat-paginator #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
 </div>
 
 <span style="margin-top:1px;padding:0px" [fxShow.xs]="true" [fxHide.gt-xs]="true">&nbsp;</span>
 
-<mat-accordion displayMode="flat"  class="mat-table">
+<mat-accordion displayMode="flat" class="mat-table">
   <section matSort class="mat-elevation-z2 mat-header-row">
     <span class="mat-header-cell" mat-sort-header="notes" fxFlex.lg="70%">Notes</span>
     <span class="mat-header-cell" mat-sort-header="visitDate">Visit Date</span>
@@ -42,7 +47,8 @@
 
   </section>
 
-  <mat-expansion-panel [expanded]="indexExpanded == i" *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
+  <mat-expansion-panel [expanded]="indexExpanded == i" *ngFor="let item of displayedRows$ | async; let i = index"
+    id="{{item.id}}">
     <mat-expansion-panel-header class="mat-row">
       <span class="mat-cell" fxFlex.lg="70%">{{item.notes | slice : 0:60}}.. &nbsp;</span>
       <span class="mat-cell">{{item.visitDate}}</span>
@@ -51,56 +57,46 @@
 
 
     <div style="font-weight: lighter" id="visit_{{item.id}}">
-        <b>Notes:</b><br/>
-        {{item.notes}}<br/>
-         <b>Labs Ordered:</b><br/>
-          {{item.labsOrdered}} <br/>
-         <b>Lab Results:</b><br/>
-          {{item.labResults}} <br/>
-         <b>Rx Order:</b><br/>
-          {{item.rxOrder}} <br/>
-          <b>Recovery Notes :</b><br/>
-          {{item.recoveryNotes}} <br/>
+      <b>Notes:</b><br />
+      {{item.notes}}<br />
+      <b>Labs Ordered:</b><br />
+      {{item.labsOrdered}} <br />
+      <b>Lab Results:</b><br />
+      {{item.labResults}} <br />
+      <b>Rx Order:</b><br />
+      {{item.rxOrder}} <br />
+      <b>Recovery Notes :</b><br />
+      {{item.recoveryNotes}} <br />
 
-          <b>Problems :</b><br/><br/>
-          <div *ngFor="let prob of item.problemsRef" style="margin-left:3px;">
+      <b>Problems :</b><br /><br />
+      <div *ngFor="let prob of item.problemsRef" style="margin-left:3px;">
 
-            <div style="margin-top:7px;border:0px; border-left: 4px solid rgba(25, 77, 175, 0.781) ;padding-left:5px;">
-            <b>Problem:</b><br/>
-            {{prob.title}}<br/>
-            <b>Description:</b><br/>
-            {{prob.description}}
+        <div style="margin-top:7px;border:0px; border-left: 4px solid rgba(25, 77, 175, 0.781) ;padding-left:5px;">
+          <b>Problem:</b><br />
+          {{prob.title}}<br />
+          <b>Description:</b><br />
+          {{prob.description}}
 
-          </div>
+        </div>
 
+      </div>
+      <br/>
+      <b>Visit Record Files :</b> <br />
+      <div *ngFor="let visitFile of item.visitFiles | async; let j = index">
+
+        <span style="display:inline"> <button mat-icon-button color="red" (click) ="deleteVisitRecordFile(visitFile.id)" aria-label="Example icon button with a menu icon">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+          <a [href]="visitFile.downloadURL" target="_blank" rel="noopener">{{visitFile.fileName}}</a>
+        </span>
+
+      </div>
+
+
+      <div>
+        <uploader [visitId]="item.id"></uploader>
+      </div>
     </div>
-    <div *ngIf="item.visitRxSlipLink">
-    <br/>
-    <b>Rx Slip Download Link:</b><br/>
-    <a href="{{item.visitRxSlipLink}}" target="_blank">Rx Slip Link</a>
-    </div>
-    <br/>
-          <b>Upload Rx Slip:</b>
-          <br/>
-          <input type="file" (change)="upload($event, item, i)" /><br/>
-        <ng-container *ngIf="(uploadProgress | async); let uploadProgress">
-            <mat-progress-bar mode="determinate" *ngIf="uploadProgress !== 100" [value]="uploadProgress"></mat-progress-bar>
-        </ng-container>
-         <!--  <progress max="100" [value]="(uploadProgress | async)"></progress> -->
-         <!--  <div class="container" *ngIf="downloadURL | async; let url">
-
-            <a href="{{url}}" target="_blank">Uploaded File</a>
-          </div>`
- -->
-         <!--
-          <b>Created On :</b><br/>
-          {{item.createdOn.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
-          <b>Updated At :</b><br/>
-          {{item.updatedAt.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
-          -->
-    </div>
-
-
 
     <mat-action-row>
       <button mat-stroked-button color="primary" (click)="openDialog(item)">Edit</button>&nbsp;
@@ -112,5 +108,3 @@
 
 
 </mat-accordion>
-
-
