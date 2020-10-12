@@ -63,12 +63,6 @@
           {{item.emailId}} <br/>
         <b>Phone:</b><br/>
           {{item.phone}} <br/>
-         <!--
-          <b>Created On :</b><br/>
-          {{item.createdOn.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
-          <b>Updated At :</b><br/>
-          {{item.updatedAt.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
-          -->
     </div>
 
 
@@ -76,7 +70,8 @@
     <mat-action-row>
       <button mat-stroked-button color="primary" (click)="openDialog(item)">Edit</button>&nbsp;
       <button mat-stroked-button color="primary" (click)="deletePatient(item.id)">Delete</button>&nbsp;
-      <button mat-stroked-button color="primary" (click)="select(item)">Select</button>
+      <button mat-stroked-button color="primary" (click)="select(item)">Select</button> &nbsp;
+      <a mat-stroked-button color="primary" href="https://api.whatsapp.com/send?phone=+91{{item.phone}}" target="_blank">Send Message</a>
     </mat-action-row>
   </mat-expansion-panel>
 

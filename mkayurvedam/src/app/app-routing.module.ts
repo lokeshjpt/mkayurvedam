@@ -1,3 +1,4 @@
+import { MkcalendarComponent } from './mkcalendar/mkcalendar.component';
 import { AppComponent } from './app.component';
 
 import { ProblemsComponent } from './problems/problems.component';
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path:'visits',
     component:VisitsComponent, canActivate: [AuthGuard]
+  },
+  {
+    path:'calendar',
+    component:MkcalendarComponent, canActivate: [AuthGuard]
   }
 ];
 

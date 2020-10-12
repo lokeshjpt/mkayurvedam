@@ -45,6 +45,7 @@ import { SharedDataService } from './service/shared-data.service';
 import { DropzoneDirective } from './dropzone.directive';
 import { UploaderComponent } from './uploader/uploader.component';
 import { UploadTaskComponent } from './upload-task/upload-task.component';
+import { MkcalendarComponent } from './mkcalendar/mkcalendar.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { UploadTaskComponent } from './upload-task/upload-task.component';
     VisitDialog,
     DropzoneDirective,
     UploaderComponent,
-    UploadTaskComponent
+    UploadTaskComponent,
+    MkcalendarComponent
   ],
   imports: [
     BrowserModule,

@@ -30,6 +30,10 @@ export class AppComponent implements OnInit{
     {
       path: 'visits',
       label: 'Visits'
+    },
+    {
+      path: 'calendar',
+      label: 'Calendar'
     }
 
   ];
