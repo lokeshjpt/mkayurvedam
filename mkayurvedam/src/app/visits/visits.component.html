@@ -58,16 +58,16 @@
 
     <div style="font-weight: lighter" id="visit_{{item.id}}">
       <b>Notes:</b><br />
-      {{item.notes}}<br />
+      <div [innerHTML]="item.notes.replaceAll('\n','<br/>')"></div> <br />
       <b>Labs Ordered:</b><br />
-      {{item.labsOrdered}} <br />
+      <div [innerHTML]="item.labsOrdered.replaceAll('\n','<br/>')"></div> <br />
       <b>Lab Results:</b><br />
-      {{item.labResults}} <br />
+      <div [innerHTML]="item.labResults.replaceAll('\n','<br/>')"></div> <br />
       <b>Rx Order:</b><br />
-      {{item.rxOrder}} <br />
-      <b>Recovery Notes :</b><br />
-      {{item.recoveryNotes}} <br />
 
+      <div [innerHTML]="item.rxOrder.replaceAll('\n','<br/>')"></div> <br />
+      <b>Recovery Notes :</b><br />
+      <div [innerHTML]="item.recoveryNotes.replaceAll('\n','<br/>')"></div> <br />
       <b>Problems :</b><br /><br />
       <div *ngFor="let prob of item.problemsRef" style="margin-left:3px;">
 
@@ -75,7 +75,7 @@
           <b>Problem:</b><br />
           {{prob.title}}<br />
           <b>Description:</b><br />
-          {{prob.description}}
+           <div [innerHTML]="prob.description.replaceAll('\n','<br/>')"></div> <br />
 
         </div>
 

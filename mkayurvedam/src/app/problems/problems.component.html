@@ -51,24 +51,18 @@
 
     <div style="font-weight: lighter">
         <b>Problem Description</b><br/>
-        {{item.description}}<br/>
+        <div [innerHTML]="item.description.replaceAll('\n','<br/>')"></div> <br />
         <b>Symptoms:</b><br/>
-          {{item.symptoms}} <br/>
+          <div [innerHTML]="item.symptoms.replaceAll('\n','<br/>')"></div> <br />
         <b>Diagnosis History:</b><br/>
-          {{item.diagnosisHistory}} <br/>
+          <div [innerHTML]="item.diagnosisHistory.replaceAll('\n','<br/>')"></div> <br />
         <b>Treatment History:</b><br/>
-          {{item.treatmentHistory}} <br/>
+          <div [innerHTML]="item.treatmentHistory.replaceAll('\n','<br/>')"></div> <br />
           <b>Surgical History:</b><br/>
-          {{item.surgicalHistory}} <br/>
-
+          <div [innerHTML]="item.surgicalHistory.replaceAll('\n','<br/>')"></div> <br />
           <b>Medicines Used:</b><br/>
-          {{item.medicinesUsed}} <br/>
-         <!--
-          <b>Created On :</b><br/>
-          {{item.createdOn.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
-          <b>Updated At :</b><br/>
-          {{item.updatedAt.seconds * 1000 | date : 'medium' : '+0530'}}<br/>
-          -->
+          <div [innerHTML]="item.medicinesUsed.replaceAll('\n','<br/>')"></div> <br />
+
     </div>
 
 
