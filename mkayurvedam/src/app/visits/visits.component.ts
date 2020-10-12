@@ -248,7 +248,8 @@ export class VisitsComponent implements OnInit {
     this.loadVisits();
   }
 
-  deleteVisitRecordFile(fileId: string): void {
+  deleteVisitRecordFile(fileId: string, path: string): void {
+    this.afStorage.ref(path).delete();
     this.afs.doc('files/' + fileId).delete();
     //this.loadVisits();
   }

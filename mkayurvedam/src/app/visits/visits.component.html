@@ -84,7 +84,7 @@
       <b>Visit Record Files :</b> <br />
       <div *ngFor="let visitFile of item.visitFiles | async; let j = index">
 
-        <span style="display:inline"> <button mat-icon-button color="red" (click) ="deleteVisitRecordFile(visitFile.id)" aria-label="Example icon button with a menu icon">
+        <span style="display:inline"> <button mat-icon-button color="red" (click) ="deleteVisitRecordFile(visitFile.id, visitFile.path)" aria-label="Example icon button with a menu icon">
           <mat-icon>delete_forever</mat-icon>
         </button>
           <a [href]="visitFile.downloadURL" target="_blank" rel="noopener">{{visitFile.fileName}}</a>
