@@ -3,8 +3,8 @@ import { AngularFirestoreModule, AngularFirestoreCollection, AngularFirestoreDoc
 import { map } from 'rxjs/operators';
 import { Component, Output, EventEmitter, Inject } from '@angular/core';
 import { ChangeDetectionStrategy, OnInit, ViewChild } from '@angular/core';
-import { Observable  } from 'rxjs';
-import { of  } from 'rxjs';
+import { Observable } from 'rxjs';
+import { of } from 'rxjs';
 import { MatSort, Sort } from '@angular/material';
 import { MatPaginator, PageEvent } from '@angular/material';
 import { fromMatSort, sortRows } from '../service/datasource-utils';
@@ -18,16 +18,17 @@ class Patient {
   name: string;
   age: string;
   dob: string;
-  gender:string;
+  gender: string;
   emailId: string;
   address: string;
-  city:string;
-  state:string;
-  country:string;
-  pincode:string;
-  phone:string;
-  createdOn:string;
-  updatedAt:string;
+  city: string;
+  state: string;
+  country: string;
+  pincode: string;
+  phone: string;
+  createdOn: string;
+  updatedAt: string;
+  fileNumber: string;
 
 }
 class PatientId extends Patient {
@@ -54,13 +55,13 @@ export class PatientsComponent {
   patient: Observable<Patient>;
   patientObj: Patient;
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   displayedRows$: Observable<Array<PatientId>>;
   totalRows$: Observable<number>;
 
-  showPatientsTable:boolean = true;
+  showPatientsTable: boolean = true;
 
   patientRec: PatientId;
 
@@ -68,15 +69,15 @@ export class PatientsComponent {
 
   }
   ngOnInit() {
-   this.loadPatients();
-
-   this.patientRec = new PatientId();
-  }
-
-  openDialog(patientObject? : PatientId ): void {
+    this.loadPatients();
 
     this.patientRec = new PatientId();
-    if(patientObject){
+  }
+
+  openDialog(patientObject?: PatientId): void {
+
+    this.patientRec = new PatientId();
+    if (patientObject) {
       this.patientRec = patientObject;
     }
     const dialogRef = this.dialog.open(PatientDialog, {
@@ -90,18 +91,16 @@ export class PatientsComponent {
     dialogRef.componentInstance.isCancel = false;
 
     dialogRef.afterClosed().subscribe(result => {
-      if(dialogRef.componentInstance.isCancel){
+      if (dialogRef.componentInstance.isCancel) {
         return;
       }
 
       console.log(this.patientRec);
-      if(patientObject){
-
+      if (patientObject) {
         this.editPatient(this.patientRec);
-      }
-      else{
+      } else {
         this.addPatient(this.patientRec);
-     }
+      }
     });
   }
 
@@ -115,13 +114,13 @@ export class PatientsComponent {
       map(docArray => {
         return docArray.map(doc => {
           const data = doc.payload.doc.data() as Patient;
-        //  console.log(data);
+          //  console.log(data);
           const id = doc.payload.doc.id;
           return { id, ...data };
         })
       }));
 
-    this.totalRows$ = this.patients.pipe(map((rows:Array<PatientId>) => rows.length));
+    this.totalRows$ = this.patients.pipe(map((rows: Array<PatientId>) => rows.length));
     this.displayedRows$ = this.patients.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
   }
 
@@ -141,14 +140,15 @@ export class PatientsComponent {
       emailId: patient.emailId,
       phone: patient.phone,
       createdOn: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      fileNumber: patient.fileNumber
     };
 
     this.afs.collection('Patient').add(patientModel);
     this.loadPatients();
   }
 
-  editPatient(patient: PatientId): void{
+  editPatient(patient: PatientId): void {
     const patientModel: any = {
       name: patient.name,
       age: patient.age,
@@ -161,8 +161,8 @@ export class PatientsComponent {
       pincode: patient.pincode,
       emailId: patient.emailId,
       phone: patient.phone,
-
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      fileNumber: patient.fileNumber
     };
 
     this.afs.doc('Patient/' + patient.id).update(patientModel);
@@ -170,7 +170,7 @@ export class PatientsComponent {
   }
 
   getPost(patientId) {
-    this.patientDoc = this.afs.doc('Patients/'+patientId);
+    this.patientDoc = this.afs.doc('Patients/' + patientId);
     this.patient = this.patientDoc.valueChanges();
   }
 
@@ -181,37 +181,37 @@ export class PatientsComponent {
 
 
 
-  filterPatients(q: string, filterBy: string): void{
+  filterPatients(q: string, filterBy: string): void {
 
-    if(q && q != ''){
+    if (q && q != '') {
 
-    const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
-    const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
+      const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+      const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
 
-    this.patientsCollection = this.afs.collection('Patient'
-    , ref => ref.where(filterBy, '>=', q ).where(filterBy, '<=', q + '\uf8ff'));
-    this.patients = this.patientsCollection.snapshotChanges().pipe(
-      map(docArray => {
-        return docArray.map(doc => {
-          const data = doc.payload.doc.data() as Patient;
-        //  console.log(data);
-          const id = doc.payload.doc.id;
-          return { id, ...data };
-        })
-      }));
+      this.patientsCollection = this.afs.collection('Patient'
+        , ref => ref.where(filterBy, '>=', q).where(filterBy, '<=', q + '\uf8ff'));
+      this.patients = this.patientsCollection.snapshotChanges().pipe(
+        map(docArray => {
+          return docArray.map(doc => {
+            const data = doc.payload.doc.data() as Patient;
+            //  console.log(data);
+            const id = doc.payload.doc.id;
+            return { id, ...data };
+          });
+        }));
 
-    this.totalRows$ = this.patients.pipe(map((rows: Array<PatientId>) => rows.length));
-    this.displayedRows$ = this.patients.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
-    }else{
+      this.totalRows$ = this.patients.pipe(map((rows: Array<PatientId>) => rows.length));
+      this.displayedRows$ = this.patients.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
+    } else {
       this.loadPatients();
     }
   }
 
-  select(selectedPatient: PatientId): void{
+  select(selectedPatient: PatientId): void {
 
     this.data.setPatientData(selectedPatient);
-    this.data.changeMessage(selectedPatient.name + " | "+ selectedPatient.age + " yrs | "
-    + selectedPatient.gender + " | "+ selectedPatient.city);
+    this.data.changeMessage(selectedPatient.name + " | " + selectedPatient.age + " yrs | "
+      + selectedPatient.gender + " | " + selectedPatient.city);
   }
 
 }
@@ -226,7 +226,7 @@ export class PatientDialog {
   public isCancel: boolean = false;
   constructor(
     public dialogRef: MatDialogRef<PatientDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: PatientId) {}
+    @Inject(MAT_DIALOG_DATA) public data: PatientId) { }
 
   onNoClick(): void {
     this.isCancel = true;

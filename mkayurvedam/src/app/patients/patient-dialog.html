@@ -3,6 +3,10 @@
 <div mat-dialog-content>
 
  <div class="example-container">
+   <mat-form-field>
+     <input matInput placeholder="File Number" [(ngModel)]="data.fileNumber" required>
+   </mat-form-field>
+
   <mat-form-field>
     <input matInput placeholder="Name" [(ngModel)]="data.name" required>
   </mat-form-field>

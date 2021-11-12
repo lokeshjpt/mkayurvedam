@@ -4,21 +4,25 @@
 
       <div [fxHide.xs]="true">
 
-        <button mat-stroked-button color="primary"  (click)="openDialog()">Add Patient</button>
-        </div> &nbsp;&nbsp;
-      <mat-form-field style="width:60px" >
-          <mat-select #filterBy [(value)]="selected" placeholder="Filter By" >
-            <mat-option value="name" >Name</mat-option>
-            <mat-option value="age">Age</mat-option>
-            <mat-option value="dob">Date of Birth</mat-option>
-            <mat-option value="phone">Phone</mat-option>
-            <mat-option value="city">City</mat-option>
-          </mat-select>
-        </mat-form-field>
-        &nbsp;&nbsp;
+        <button mat-stroked-button color="primary" (click)="openDialog()">Add Patient</button>
+      </div> &nbsp;&nbsp;
+      <mat-form-field style="width:60px">
+        <mat-select #filterBy [(value)]="selected" placeholder="Filter By">
+          <mat-option value="fileNumber">File Number</mat-option>
+          <mat-option value="name">Name</mat-option>
+          <mat-option value="age">Age</mat-option>
+          <mat-option value="dob">Date of Birth</mat-option>
+          <mat-option value="phone">Phone</mat-option>
+          <mat-option value="city">City</mat-option>
+        </mat-select>
+      </mat-form-field>
+      &nbsp;&nbsp;
       <mat-form-field floatPlaceholder="never" style="width:120px">
-        <input matInput #filter placeholder="Filter Patients" (keydown.enter)="filterPatients(filter.value, filterBy.value)">
-        <button color="primary" matSuffix mat-icon-button (click)="filterPatients(filter.value, filterBy.value)"><mat-icon>search</mat-icon></button>
+        <input matInput #filter placeholder="Filter Patients"
+          (keydown.enter)="filterPatients(filter.value, filterBy.value)">
+        <button color="primary" matSuffix mat-icon-button (click)="filterPatients(filter.value, filterBy.value)">
+          <mat-icon>search</mat-icon>
+        </button>
       </mat-form-field>
 
     </div>
@@ -26,27 +30,30 @@
   </div>
 
 
-  <div fxFlex="40%"  fxLayout.xs="column"  >
+  <div fxFlex="40%" fxLayout.xs="column">
 
 
-    <button mat-stroked-button style="margin-left:2px;margin-right:2px" color="primary" [fxShow.xs]="true" [fxHide.gt-xs]="true"  (click)="openDialog()">Add Patient</button>
+    <button mat-stroked-button style="margin-left:2px;margin-right:2px" color="primary" [fxShow.xs]="true"
+      [fxHide.gt-xs]="true" (click)="openDialog()">Add Patient</button>
     <mat-paginator #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
 </div>
 
 <span style="margin-top:1px;padding:0px" [fxShow.xs]="true" [fxHide.gt-xs]="true">&nbsp;</span>
 
-<mat-accordion displayMode="flat"  class="mat-table">
+<mat-accordion displayMode="flat" class="mat-table">
   <section matSort class="mat-elevation-z2 mat-header-row">
+    <span class="mat-header-cell" mat-sort-header="name">File Number</span>
     <span class="mat-header-cell" mat-sort-header="name">Name</span>
     <span class="mat-header-cell" mat-sort-header="age">Age</span>
     <span class="mat-header-cell" mat-sort-header="gender">Gender</span>
     <span class="mat-header-cell" mat-sort-header="city">City</span>
   </section>
 
-  <mat-expansion-panel  *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
+  <mat-expansion-panel *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
     <mat-expansion-panel-header class="mat-row">
+      <span class="mat-cell">{{item.fileNumber}}</span>
       <span class="mat-cell">{{item.name}}</span>
       <span class="mat-cell">{{item.age}}</span>
       <span class="mat-cell">{{item.gender}}</span>
@@ -55,23 +62,24 @@
 
 
     <div style="font-weight: lighter">
-        <b>Date of Birth:</b><br/>
-        {{item.dob}}<br/>
-        <b>Address:</b><br/>
-          {{item.address}} <br/> {{item.state}} | {{item.city}} | {{item.pincode}}<br/>
-        <b>Email Address:</b><br/>
-          {{item.emailId}} <br/>
-        <b>Phone:</b><br/>
-          {{item.phone}} <br/>
+      <b>File Number:</b><br />
+      {{item.fileNumber}}<br />
+      <b>Date of Birth:</b><br />
+      {{item.dob}}<br />
+      <b>Address:</b><br />
+      {{item.address}} <br /> {{item.state}} | {{item.city}} | {{item.pincode}}<br />
+      <b>Email Address:</b><br />
+      {{item.emailId}} <br />
+      <b>Phone:</b><br />
+      {{item.phone}} <br />
     </div>
-
-
 
     <mat-action-row>
       <button mat-stroked-button color="primary" (click)="openDialog(item)">Edit</button>&nbsp;
       <button mat-stroked-button color="primary" (click)="deletePatient(item.id)">Delete</button>&nbsp;
       <button mat-stroked-button color="primary" (click)="select(item)">Select</button> &nbsp;
-      <a mat-stroked-button color="primary" href="https://api.whatsapp.com/send?phone=+91{{item.phone}}" target="_blank">Send Message</a>
+      <a mat-stroked-button color="primary" href="https://api.whatsapp.com/send?phone=+91{{item.phone}}"
+        target="_blank">Send Message</a>
     </mat-action-row>
   </mat-expansion-panel>
 
