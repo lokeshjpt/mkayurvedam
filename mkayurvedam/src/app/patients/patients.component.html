@@ -14,6 +14,8 @@
           <mat-option value="dob">Date of Birth</mat-option>
           <mat-option value="phone">Phone</mat-option>
           <mat-option value="city">City</mat-option>
+          <mat-option value="primaryHealthIssue">Primary Health Issue</mat-option>
+          <mat-option value="secondaryHealthIssue">Secondary Health Issue</mat-option>
         </mat-select>
       </mat-form-field>
       &nbsp;&nbsp;
@@ -67,11 +69,16 @@
       <b>Date of Birth:</b><br />
       {{item.dob}}<br />
       <b>Address:</b><br />
-      {{item.address}} <br /> {{item.state}} | {{item.city}} | {{item.pincode}}<br />
+      <div [innerHTML]="item.address.replaceAll('\n','<br/>')"></div>{{item.state}} | {{item.city}} |
+      {{item.pincode}}<br />
       <b>Email Address:</b><br />
       {{item.emailId}} <br />
       <b>Phone:</b><br />
       {{item.phone}} <br />
+      <b>Primary Health Issue:</b><br />
+      {{item.primaryHealthIssue}} <br />
+      <b>Secondary Health Issue:</b><br />
+      {{item.secondaryHealthIssue}} <br />
     </div>
 
     <mat-action-row>

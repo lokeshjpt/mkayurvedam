@@ -1,21 +1,20 @@
-
 <h1 mat-dialog-title>Add/Edit Patient</h1>
 <div mat-dialog-content>
 
- <div class="example-container">
-   <mat-form-field>
-     <input matInput placeholder="File Number" [(ngModel)]="data.fileNumber" required>
-   </mat-form-field>
+  <div class="example-container">
+    <mat-form-field>
+      <input matInput placeholder="File Number" [(ngModel)]="data.fileNumber" required>
+    </mat-form-field>
 
-  <mat-form-field>
-    <input matInput placeholder="Name" [(ngModel)]="data.name" required>
-  </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Name" [(ngModel)]="data.name" required>
+    </mat-form-field>
 
-  <mat-form-field>
+    <mat-form-field>
       <input matInput placeholder="Age" [(ngModel)]="data.age" required>
-  </mat-form-field>
+    </mat-form-field>
 
-  <mat-form-field>
+    <mat-form-field>
       <mat-select placeholder="Gender" [(ngModel)]="data.gender" required>
         <mat-option value="Male">Male</mat-option>
         <mat-option value="Female">Female</mat-option>
@@ -23,40 +22,56 @@
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput  placeholder="Date of Birth" [(ngModel)]="data.dob" required>
+      <input matInput placeholder="Date of Birth" [(ngModel)]="data.dob" required>
 
-      </mat-form-field>
+    </mat-form-field>
 
-  <mat-form-field>
-    <textarea matInput placeholder="Address" [(ngModel)]="data.address" required></textarea>
-  </mat-form-field>
+    <mat-form-field>
+      <textarea matInput placeholder="Address" [(ngModel)]="data.address" required></textarea>
+    </mat-form-field>
 
-  <mat-form-field>
+    <mat-form-field>
       <input matInput placeholder="State" [(ngModel)]="data.state" required>
-  </mat-form-field>
+    </mat-form-field>
 
-  <mat-form-field>
+    <mat-form-field>
       <input matInput placeholder="City" [(ngModel)]="data.city" required>
-  </mat-form-field>
+    </mat-form-field>
 
-  <mat-form-field>
+    <mat-form-field>
       <input matInput placeholder="Country" [(ngModel)]="data.country" required>
-  </mat-form-field>
+    </mat-form-field>
 
-  <mat-form-field>
+    <mat-form-field>
       <input matInput placeholder="Pincode" [(ngModel)]="data.pincode" required>
-  </mat-form-field>
+    </mat-form-field>
 
-  <mat-form-field>
+    <mat-form-field>
       <input matInput placeholder="EmailId" [(ngModel)]="data.emailId" required>
-  </mat-form-field>
+    </mat-form-field>
 
-  <mat-form-field>
+    <mat-form-field>
       <input matInput placeholder="Phone Number" [(ngModel)]="data.phone" required>
-  </mat-form-field>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select [(ngModel)]="data.primaryHealthIssue" placeholder="Primary Health Issue">
+        <mat-option value="Heart Problem">Heart Problem</mat-option>
+        <mat-option value="Gastric Problem">Gastric Problem</mat-option>
+        <mat-option value="Problem3">Problem3</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select [(ngModel)]="data.secondaryHealthIssue" placeholder="Secondary Health Issue">
+        <mat-option value="Heart Problem">Heart Problem</mat-option>
+        <mat-option value="Gastric Problem">Gastric Problem</mat-option>
+        <mat-option value="Problem3">Problem3</mat-option>
+      </mat-select>
+    </mat-form-field>
 
 
-</div>
+  </div>
 
 </div>
 
@@ -65,4 +80,3 @@
   <button mat-button (click)="onNoClick()">Cancel</button>
 
 </div>
-

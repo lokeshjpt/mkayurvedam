@@ -29,6 +29,8 @@ class Patient {
   createdOn: string;
   updatedAt: string;
   fileNumber: string;
+  primaryHealthIssue: string;
+  secondaryHealthIssue: string;
 
 }
 class PatientId extends Patient {
@@ -141,7 +143,9 @@ export class PatientsComponent {
       phone: patient.phone,
       createdOn: new Date(),
       updatedAt: new Date(),
-      fileNumber: patient.fileNumber
+      fileNumber: patient.fileNumber,
+      primaryHealthIssue: patient.primaryHealthIssue,
+      secondaryHealthIssue: patient.secondaryHealthIssue
     };
 
     this.afs.collection('Patient').add(patientModel);
@@ -162,7 +166,9 @@ export class PatientsComponent {
       emailId: patient.emailId,
       phone: patient.phone,
       updatedAt: new Date(),
-      fileNumber: patient.fileNumber
+      fileNumber: patient.fileNumber,
+      primaryHealthIssue: patient.primaryHealthIssue,
+      secondaryHealthIssue: patient.secondaryHealthIssue
     };
 
     this.afs.doc('Patient/' + patient.id).update(patientModel);
