@@ -39,18 +39,28 @@
     </mat-select>
   </mat-form-field>
 
-
   <mat-form-field>
       <mat-select required placeholder="Using Ayurvedam" [(ngModel)]="data.usingAyurvedam">
         <mat-option value="Yes">Yes</mat-option>
         <mat-option value="No">No</mat-option>
       </mat-select>
     </mat-form-field>
+    
+  <mat-form-field>
+    <mat-select [(ngModel)]="data.primaryHealthIssue" placeholder="Primary Health Issue">
+      <mat-option value="Heart Problem">Heart Problem</mat-option>
+      <mat-option value="Gastric Problem">Gastric Problem</mat-option>
+      <mat-option value="Problem3">Problem3</mat-option>
+    </mat-select>
+  </mat-form-field>
 
-
-
-
-
+  <mat-form-field>
+    <mat-select [(ngModel)]="data.secondaryHealthIssue" placeholder="Secondary Health Issue">
+      <mat-option value="Heart Problem">Heart Problem</mat-option>
+      <mat-option value="Gastric Problem">Gastric Problem</mat-option>
+      <mat-option value="Problem3">Problem3</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 </div>

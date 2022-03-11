@@ -20,16 +20,17 @@ class Problem {
   title: string;
   description: string;
   symptoms: string;
-  status:string;
+  status: string;
   diagnosisHistory: string;
   treatmentHistory: string;
-  surgicalHistory:string;
-  medicinesUsed:string;
-  usingAyurvedam:string;
-  createdOn:string;
-  updatedAt:string;
-  patientRef:string;
-
+  surgicalHistory: string;
+  medicinesUsed: string;
+  usingAyurvedam: string;
+  createdOn: string;
+  updatedAt: string;
+  patientRef: string;
+  primaryHealthIssue: string;
+  secondaryHealthIssue: string;
 }
 class ProblemId extends Problem {
   id: string;
@@ -144,15 +145,17 @@ export class ProblemsComponent implements OnInit {
       title: problem.title,
       description: problem.description,
       symptoms: problem.symptoms,
-      status:problem.status,
+      status: problem.status,
       diagnosisHistory: problem.diagnosisHistory,
       treatmentHistory: problem.treatmentHistory,
-      surgicalHistory:problem.surgicalHistory,
-      medicinesUsed:problem.medicinesUsed,
-      usingAyurvedam:problem.usingAyurvedam,
-      createdOn:new Date(),
-      updatedAt:new Date(),
-      patientRef: this.data.patient.id
+      surgicalHistory: problem.surgicalHistory,
+      medicinesUsed: problem.medicinesUsed,
+      usingAyurvedam: problem.usingAyurvedam,
+      createdOn: new Date(),
+      updatedAt: new Date(),
+      patientRef: this.data.patient.id,
+      primaryHealthIssue: problem.primaryHealthIssue,
+      secondaryHealthIssue: problem.secondaryHealthIssue
     };
 
     this.afs.collection('Problem').add(problemModel);
@@ -165,13 +168,15 @@ export class ProblemsComponent implements OnInit {
       title: problem.title,
       description: problem.description,
       symptoms: problem.symptoms,
-      status:problem.status,
+      status: problem.status,
       diagnosisHistory: problem.diagnosisHistory,
       treatmentHistory: problem.treatmentHistory,
-      surgicalHistory:problem.surgicalHistory,
-      medicinesUsed:problem.medicinesUsed,
-      usingAyurvedam:problem.usingAyurvedam,
-      updatedAt: new Date()
+      surgicalHistory: problem.surgicalHistory,
+      medicinesUsed: problem.medicinesUsed,
+      usingAyurvedam: problem.usingAyurvedam,
+      updatedAt: new Date(),
+      primaryHealthIssue: problem.primaryHealthIssue,
+      secondaryHealthIssue: problem.secondaryHealthIssue
     };
 
     this.afs.doc('Problem/' + problem.id).update(problemModel);
@@ -189,7 +194,7 @@ export class ProblemsComponent implements OnInit {
 
   filterProblems(q: string, filterBy: string): void{
 
-    if(q && q != ''){
+    if ( q && q != '') {
 
     const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
     const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
@@ -199,10 +204,10 @@ export class ProblemsComponent implements OnInit {
       map(docArray => {
         return docArray.map(doc => {
           const data = doc.payload.doc.data() as Problem;
-        //  console.log(data);
+          //  console.log(data);
           const id = doc.payload.doc.id;
           return { id, ...data };
-        })
+        });
       }));
 
     this.totalRows$ = this.problems.pipe(map((rows: Array<ProblemId>) => rows.length));

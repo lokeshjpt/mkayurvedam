@@ -4,18 +4,21 @@
 
       <div [fxHide.xs]="true">
 
-        <button mat-stroked-button color="primary"  (click)="openDialog()">Add Problem</button>
-        </div> &nbsp;&nbsp;
-      <mat-form-field style="width:60px" >
-          <mat-select #filterBy [(value)]="selected" placeholder="Filter By" >
-            <mat-option value="title" >Title</mat-option>
-            <mat-option value="status">Status</mat-option>
-          </mat-select>
-        </mat-form-field>
-        &nbsp;&nbsp;
+        <button mat-stroked-button color="primary" (click)="openDialog()">Add Problem</button>
+      </div> &nbsp;&nbsp;
+      <mat-form-field style="width:60px">
+        <mat-select #filterBy [(value)]="selected" placeholder="Filter By">
+          <mat-option value="title">Title</mat-option>
+          <mat-option value="status">Status</mat-option>
+        </mat-select>
+      </mat-form-field>
+      &nbsp;&nbsp;
       <mat-form-field floatPlaceholder="never" style="width:120px">
-        <input matInput #filter placeholder="Filter Problems" (keydown.enter)="filterProblems(filter.value, filterBy.value)">
-        <button color="primary" matSuffix mat-icon-button (click)="filterProblems(filter.value, filterBy.value)"><mat-icon>search</mat-icon></button>
+        <input matInput #filter placeholder="Filter Problems"
+          (keydown.enter)="filterProblems(filter.value, filterBy.value)">
+        <button color="primary" matSuffix mat-icon-button (click)="filterProblems(filter.value, filterBy.value)">
+          <mat-icon>search</mat-icon>
+        </button>
       </mat-form-field>
 
     </div>
@@ -23,25 +26,26 @@
   </div>
 
 
-  <div fxFlex="40%"  fxLayout.xs="column"  >
+  <div fxFlex="40%" fxLayout.xs="column">
 
 
-    <button mat-stroked-button style="margin-left:2px;margin-right:2px" color="primary" [fxShow.xs]="true" [fxHide.gt-xs]="true"  (click)="openDialog()">Add Problem</button>
+    <button mat-stroked-button style="margin-left:2px;margin-right:2px" color="primary" [fxShow.xs]="true"
+      [fxHide.gt-xs]="true" (click)="openDialog()">Add Problem</button>
     <mat-paginator #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
 </div>
 
 <span style="margin-top:1px;padding:0px" [fxShow.xs]="true" [fxHide.gt-xs]="true">&nbsp;</span>
 
-<mat-accordion displayMode="flat"  class="mat-table">
+<mat-accordion displayMode="flat" class="mat-table">
   <section matSort class="mat-elevation-z2 mat-header-row">
     <span class="mat-header-cell" mat-sort-header="title" fxFlex.lg="70%">Title</span>
     <span class="mat-header-cell" mat-sort-header="status">Status</span>
     <span class="mat-header-cell" mat-sort-header="usingAyurvedam">Using Ayurvedam</span>
   </section>
 
-  <mat-expansion-panel  *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
+  <mat-expansion-panel *ngFor="let item of displayedRows$ | async; let i = index" id="{{item.id}}">
     <mat-expansion-panel-header class="mat-row">
       <span class="mat-cell" fxFlex.lg="70%">{{item.title}}</span>
       <span class="mat-cell">{{item.status}}</span>
@@ -50,18 +54,22 @@
 
 
     <div style="font-weight: lighter">
-        <b>Problem Description</b><br/>
-        <div [innerHTML]="item.description.replaceAll('\n','<br/>')"></div> <br />
-        <b>Symptoms:</b><br/>
-          <div [innerHTML]="item.symptoms.replaceAll('\n','<br/>')"></div> <br />
-        <b>Diagnosis History:</b><br/>
-          <div [innerHTML]="item.diagnosisHistory.replaceAll('\n','<br/>')"></div> <br />
-        <b>Treatment History:</b><br/>
-          <div [innerHTML]="item.treatmentHistory.replaceAll('\n','<br/>')"></div> <br />
-          <b>Surgical History:</b><br/>
-          <div [innerHTML]="item.surgicalHistory.replaceAll('\n','<br/>')"></div> <br />
-          <b>Medicines Used:</b><br/>
-          <div [innerHTML]="item.medicinesUsed.replaceAll('\n','<br/>')"></div> <br />
+      <b>Problem Description</b><br />
+      <div [innerHTML]="item.description.replaceAll('\n','<br/>')"></div> <br />
+      <b>Symptoms:</b><br />
+      <div [innerHTML]="item.symptoms.replaceAll('\n','<br/>')"></div> <br />
+      <b>Diagnosis History:</b><br />
+      <div [innerHTML]="item.diagnosisHistory.replaceAll('\n','<br/>')"></div> <br />
+      <b>Treatment History:</b><br />
+      <div [innerHTML]="item.treatmentHistory.replaceAll('\n','<br/>')"></div> <br />
+      <b>Surgical History:</b><br />
+      <div [innerHTML]="item.surgicalHistory.replaceAll('\n','<br/>')"></div> <br />
+      <b>Medicines Used:</b><br />
+      <div [innerHTML]="item.medicinesUsed.replaceAll('\n','<br/>')"></div> <br />
+      <b>Primary Health Issue:</b><br />
+      <div>{{item.primaryHealthIssue}}</div><br />
+      <b>Secondary Health Issue:</b><br />
+      <div>{{item.secondaryHealthIssue}}</div><br />
 
     </div>
 
